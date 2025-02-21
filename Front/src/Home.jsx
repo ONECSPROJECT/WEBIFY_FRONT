@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "./Auth";
+import NavBar from "./NavBar";
 function Home() {
   const [name, setName] = useState('');
   const {email}=useAuth();
@@ -14,6 +15,7 @@ function Home() {
     if (email) username();},[email]);
   return (
     <>
+    <NavBar />
     <p>{name}</p>
     </>
   );
