@@ -1,13 +1,17 @@
 import React from "react";
 import {useState} from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function Login(){
-    const[email,setemail]=useState('');
+    const navigate=useNavigate();
+    const[email,setEmail]=useState('');
     const[password,setpassword]=useState('');
 
-const handlesubmit = async ()=>{
+const handlesubmit = async (e)=>{
+    e.preventDefault();
 try{
  const response= await axios.post("",{email,password})
+ navigate('/Home')
 }
 catch(erreur){
     console.log("erreur verifier le email ou mot pass")
@@ -23,10 +27,10 @@ return(
 
 
     <form onSubmit={handlesubmit} action="">
-        <div className="emailinput">
+        <div className="usernameinput">
 <label htmlFor="">Enter your email:</label>
 <br />
-<input type="text" placeholder="email"  value={email} onChange={(e)=>setemail(e.target.value)}/>
+<input type="text" placeholder="email"  value={email} onChange={(e)=>setEmail(e.target.value)}/>
 </div>
 
 
