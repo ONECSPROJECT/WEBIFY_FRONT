@@ -1,13 +1,41 @@
-import { useState } from "react";
+import { useRef, useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from './ResetPass.module.css'
 function ResetPass(){
-
     const[password, setPassword]= useState('');
+    const[newPassword, setNewPassword]=useState('')
+    const [match, setMatch]=useState('')
     const[response,setResponse]=useState('')
     const[strength,setStrength]=useState('');
     const navigate=useNavigate();
+    const matchRef=useRef(null)
+
+
+    function checkStr(pass){
+        if(pass.length<=8){
+            setStrength("Weak")
+        }
+        else if(pass.length<=12){
+            setStrength("Moderate")
+        }
+        else{
+            setStrength("Strong")
+        }
+    }
+
+    useEffect(() => {
+        if (newPassword==='') return;
+        if (newPassword !== password){
+            setMatch("Passwords do not match!")
+            matchRef.current.style.color="red"
+        }else{
+            setMatch("Passwords match!")
+            matchRef.current.style.color="green"
+        }},[password, newPassword]);
+
+
+
     async function handleR(e) {
         e.preventDefault();
         try{
@@ -19,10 +47,7 @@ function ResetPass(){
             setResponse("error, retry")
         }
 
-        function check(password){
-            // check length?
-        }
-
+    
 
     }
 
@@ -33,12 +58,11 @@ function ResetPass(){
                     <h2 className={styles.Signin}>Reset your password</h2>
                         <span className={styles.infoText}>Enter a new password to secure your account.</span>
                     <br />  <br />
-                <input className={styles.inputfield} placeholder="New Password"  type="password" name="" id="" value={password} onChange={(e)=>{setPassword(e.target.value)
-                    setStrength(e.target.value)
-                }} />
+                <input className={styles.inputfield} placeholder="New Password"  type="password" name="" id="" value={password} onChange={(e)=>{setPassword(e.target.value); checkStr(e.target.value)}} />
                 <br />
                 <span>Strength:{strength}</span> <br /> <br />
-                <input className={styles.inputfield} placeholder="Confirm New Password"  type="password" name="" id="" value={password} onChange={(e)=>setPassword(e.target.value)} />
+                <input className={styles.inputfield} placeholder="Confirm New Password"  type="password" name="" id="" value={newPassword} onChange={(e)=>{setNewPassword(e.target.value);}} />
+                <span ref={matchRef}>{match}</span> 
                 <button type="submit">Reset password</button>
             </form>
             <p>{response}</p>
