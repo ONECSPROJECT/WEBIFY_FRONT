@@ -2,6 +2,8 @@ import React from "react";
 import {useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import emailicon from './assets/mail.png'
+import styles from './Auth.module.css'
 function Login(){
     const navigate=useNavigate();
     const[email,setEmail]=useState('');
@@ -19,30 +21,35 @@ catch(erreur){
 
 }
 
+function handleForgotPass(){
+    navigate('/ForgotPass')
+}
+
    
     
 return(
 
 
-
-
-    <form onSubmit={handlesubmit} action="">
-        <div className="usernameinput">
-<label htmlFor="">Enter your email:</label>
+<div className={styles.container}>
+  <form onSubmit={handlesubmit}>
+    <span className={styles.Signin}>Sign In</span>
+<br /> <br />
+    <div className={styles.emailinput}>
+      <input className={styles.email} type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+    </div>
 <br />
-<input type="text" placeholder="email"  value={email} onChange={(e)=>setEmail(e.target.value)}/>
+    <div className={styles.passwordinput}>
+      <input className={styles.password} type="text" placeholder="Password"value={password} onChange={(e) => setpassword(e.target.value)}/>
+    </div>
+<br />
+    <button className={styles.sub} type="submit">
+      Sign In</button>
+<br />
+    <button className={styles.ForgotPass} onClick={handleForgotPass}>
+      Forgot Password?</button>
+  </form>
 </div>
 
-
-<div className="passwordinput">
-<label htmlFor="">password:</label>
-<br />
-<input type="text" placeholder="password"  value={password} onChange={(e)=>setpassword(e.target.value)} />
-</div>
-<button type="submit"> Log In</button>
-    </form>
-    
-    
  
 )
 

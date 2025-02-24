@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-
+import styles from './ResetPass.module.css'
 function ResetPass(){
 
     const[password, setPassword]= useState('');
@@ -22,21 +22,27 @@ function ResetPass(){
         function check(password){
             // check length?
         }
+
+
     }
 
     return(
         <>
-        <div className="container">
-            <form action="" onSubmit={handleR}>
-                <label htmlFor="">Reset your password</label>
-                <input type="password" name="" id="" value={password} onChange={(e)=>{setPassword(e.target.value)
+        <div className={styles.container}>
+            <form className={styles.form} action="" onSubmit={handleR}>
+                    <h2 className={styles.Signin}>Reset your password</h2>
+                        <span className={styles.infoText}>Enter a new password to secure your account.</span>
+                    <br />  <br />
+                <input className={styles.inputfield} placeholder="New Password"  type="password" name="" id="" value={password} onChange={(e)=>{setPassword(e.target.value)
                     setStrength(e.target.value)
                 }} />
-                <p>Strength:{strength}</p>
+                <br />
+                <span>Strength:{strength}</span> <br /> <br />
+                <input className={styles.inputfield} placeholder="Confirm New Password"  type="password" name="" id="" value={password} onChange={(e)=>setPassword(e.target.value)} />
                 <button type="submit">Reset password</button>
             </form>
             <p>{response}</p>
-            <button onClick={navigate('./Login')}>Back to Login</button>
+    <button className={styles.BacktoLogin} onClick={() => navigate('/')}>Back to login</button>
         </div>
         </>
     )

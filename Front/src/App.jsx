@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Login />} />
         <Route path="/Home" element={<Home />} />
         <Route path='/ResetPass' element={<ResetPass />}></Route>
-        <Route path='/Redirect' element={<Redirect />}></Route>
+        <Route path='/ResetPass/Redirect' element={<Redirect />}></Route>
       </Routes>
     </AuthProvider>
   );
