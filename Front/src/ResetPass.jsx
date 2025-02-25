@@ -1,8 +1,9 @@
 import { useRef, useState,useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
 import styles from './ResetPass.module.css'
 function ResetPass(){
+    const {token} = useParams();
     const[password, setPassword]= useState('');
     const[newPassword, setNewPassword]=useState('')
     const [match, setMatch]=useState('')
@@ -11,7 +12,6 @@ function ResetPass(){
     const navigate=useNavigate();
     const matchRef=useRef(null)
     const strRef=useRef(null);
-
 
     function checkStr(pass){
         if(pass.length<=8){
@@ -45,8 +45,8 @@ function ResetPass(){
     async function handleR(e) {
         e.preventDefault();
         try{
-            const data= axios.post("",{password});
-            setResponse("Passwrod resetted!")
+             await axios.post('${token}', {password}); /*sent token here*/
+            setResponse("Password resetted!")
             navigate('./Redirect')
         }
         catch(error){

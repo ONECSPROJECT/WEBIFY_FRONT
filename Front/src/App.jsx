@@ -14,7 +14,7 @@ function App() {
         <Route path="/ForgotPass" element={< ForgotPass/>} />
         <Route path="/" element={<Login />} />
         <Route path="/Home" element={<Home />} />
-        <Route path='/ResetPass' element={<ResetPass />}></Route>
+        <Route path='/ResetPass/:token' element={<ResetPass />}></Route>
         <Route path='/ResetPass/Redirect' element={<Redirect />}></Route>
       </Routes>
     </AuthProvider>
