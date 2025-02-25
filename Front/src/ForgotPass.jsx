@@ -15,7 +15,7 @@ function ForgotPass(){
         try{
             const data = await axios.post("",{email});
             setResponse("Check your email for the reset link");
-            ResetRef.current.style.display="none";
+                        ResetRef.current.style.display="none";
             CheckRef.current.style.display="flex"
 
         }

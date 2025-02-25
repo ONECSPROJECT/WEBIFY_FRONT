@@ -10,9 +10,6 @@ function Redirect(){
             <h2 className={styles.Signin}>Redirecting...</h2>
             <p>Please wait while we take you to the login page</p>
             <div className={styles.loader}>
-                <div className={styles.dot}></div>
-                <div className={styles.dot}></div>
-                <div className={styles.dot}></div>
                 </div>
         </div>
         </>

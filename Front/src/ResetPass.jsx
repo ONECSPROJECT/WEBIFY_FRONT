@@ -10,17 +10,23 @@ function ResetPass(){
     const[strength,setStrength]=useState('');
     const navigate=useNavigate();
     const matchRef=useRef(null)
+    const strRef=useRef(null);
 
 
     function checkStr(pass){
         if(pass.length<=8){
             setStrength("Weak")
+            strRef.current.style.color="red"
         }
         else if(pass.length<=12){
             setStrength("Moderate")
+            strRef.current.style.color="yellow"
+
         }
         else{
             setStrength("Strong")
+            strRef.current.style.color="green"
+
         }
     }
 
@@ -57,17 +63,14 @@ function ResetPass(){
             <form className={styles.form} action="" onSubmit={handleR}>
                     <h2 className={styles.Signin}>Reset your password</h2>
                         <span className={styles.infoText}>Enter a new password to secure your account.</span>
-                    <br />  <br />
                 <input className={styles.inputfield} placeholder="New Password"  type="password" name="" id="" value={password} onChange={(e)=>{setPassword(e.target.value); checkStr(e.target.value)}} />
-                <br />
-                <span>Strength:{strength}</span> <br /> <br />
+                <span ref={strRef}>Strength:{strength}</span>
                 <input className={styles.inputfield} placeholder="Confirm New Password"  type="password" name="" id="" value={newPassword} onChange={(e)=>{setNewPassword(e.target.value);}} />
                 <span ref={matchRef}>{match}</span> 
-                <button type="submit">Reset password</button>
+                <button type="submit">Reset password</button>   
             </form>
-            <p>{response}</p>
-    <button className={styles.BacktoLogin} onClick={() => navigate('/')}>Back to login</button>
-        </div>
+            <button className={styles.BacktoLogin} onClick={() => navigate('/')}>Back to login</button>
+            <p>{response}</p>        </div>
         </>
     )
 }

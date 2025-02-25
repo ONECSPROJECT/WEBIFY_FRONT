@@ -26,17 +26,17 @@ body{
 }
 .loader{
     border: 5px solid #f3f3f3;
-    border-top: 5px solid #0A192F;
-    border-bottom:5px dotted #0A192F;
+    border-top: 5px solid #64ffda;
     border-radius: 50%;
     width: 40px;
     height: 40px;
-    animation: spin 1s infinite;
+    animation: spin 1s linear infinite;
     margin-top: 20px;
   }
   
   @keyframes spin {
-    from {transform: rotate(0deg);}
+    from {transform: rotate(0deg);
+    }
     to {transform: rotate(360deg);}
   }
   

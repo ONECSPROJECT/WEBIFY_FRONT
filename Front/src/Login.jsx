@@ -2,7 +2,6 @@ import React from "react";
 import {useState} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import emailicon from './assets/mail.png'
 import styles from './Auth.module.css'
 function Login(){
     const navigate=useNavigate();
@@ -44,7 +43,6 @@ return(
 <br />
     <button className={styles.sub} type="submit">
       Sign In</button>
-<br />
     <button className={styles.ForgotPass} onClick={handleForgotPass}>
       Forgot Password?</button>
   </form>
