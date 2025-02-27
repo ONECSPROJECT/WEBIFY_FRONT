@@ -41,7 +41,7 @@ body {
     gap: 0.8rem;
   }
   
-  .container .Signin {
+  .container .Header {
     transform: translateY(50px);
     font-size: 1.5rem;
   }

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import axios from "axios";
-import styles from './ForgotPass.module.css';
+import styles from '../CSS/ForgotPass.module.css';
 
 
 import { useNavigate } from "react-router-dom";
@@ -30,7 +30,7 @@ function ForgotPass(){
         <>
   <div ref={ResetRef} className={styles.containerReset}>
     <br />
-    <h2 className={styles.Signin}>Forgot your password?</h2>
+    <h2 className={styles.Header}>Forgot your password?</h2>
     <span className={styles.infoText}>Enter your email below and we’ll send you a reset link.</span>
     <form className={styles.form} onSubmit={handleF}>
       <input className={styles.inputfield} placeholder="Enter your email address" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>

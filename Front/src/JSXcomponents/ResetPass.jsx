@@ -1,7 +1,7 @@
 import { useRef, useState,useEffect } from "react";
 import { useNavigate,useParams } from "react-router-dom";
 import axios from "axios";
-import styles from './ResetPass.module.css'
+import styles from '../CSS/ResetPass.module.css'
 function ResetPass(){
     const {token} = useParams();
     const[password, setPassword]= useState('');
@@ -61,7 +61,7 @@ function ResetPass(){
         <>
         <div className={styles.container}>
             <form className={styles.form} action="" onSubmit={handleR}>
-                    <h2 className={styles.Signin}>Reset your password</h2>
+                    <h2 className={styles.Header}>Reset your password</h2>
                         <span className={styles.infoText}>Enter a new password to secure your account.</span>
                 <input className={styles.inputfield} placeholder="New Password"  type="password" name="" id="" value={password} onChange={(e)=>{setPassword(e.target.value); checkStr(e.target.value)}} />
                 <span ref={strRef}>Strength:{strength}</span>

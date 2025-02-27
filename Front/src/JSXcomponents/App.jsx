@@ -1,4 +1,4 @@
-import './App.css';
+import '../CSS/App.css';
 import Login from './Login';
 import ForgotPass from './ForgotPass';
 import ResetPass from './ResetPass';
