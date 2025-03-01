@@ -27,14 +27,14 @@ function ForgotPass(){
 
 
     return(
-        <>
+        <div className={styles.ForgotPassword_container}>
   <div ref={ResetRef} className={styles.containerReset}>
     <br />
     <h2 className={styles.Header}>Forgot your password?</h2>
     <span className={styles.infoText}>Enter your email below and we’ll send you a reset link.</span>
     <form className={styles.form} onSubmit={handleF}>
       <input className={styles.inputfield} placeholder="Enter your email address" type="email" value={email} onChange={(e) => setEmail(e.target.value)}/>
-      <button type="submit">Send Reset Link</button>
+      <button className={styles.sub} type="submit">Send Reset Link</button>
     </form>
     <button className={styles.BacktoLogin} onClick={() => backtolog('/')}>Back to login</button>
     <p>{response}</p>
@@ -45,7 +45,7 @@ function ForgotPass(){
     <br />
     <span className={styles.infoText}>Check your email for a password reset link.</span>
   </div>
-</>
+</div>
 
 
     )

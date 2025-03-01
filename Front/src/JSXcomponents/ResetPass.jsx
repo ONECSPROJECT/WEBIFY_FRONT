@@ -58,7 +58,7 @@ function ResetPass(){
     }
 
     return(
-        <>
+        <div className={styles.ResetPassword_container}>
         <div className={styles.container}>
             <form className={styles.form} action="" onSubmit={handleR}>
                     <h2 className={styles.Header}>Reset your password</h2>
@@ -67,11 +67,12 @@ function ResetPass(){
                 <span ref={strRef}>Strength:{strength}</span>
                 <input className={styles.inputfield} placeholder="Confirm New Password"  type="password" name="" id="" value={newPassword} onChange={(e)=>{setNewPassword(e.target.value);}} />
                 <span ref={matchRef}>{match}</span> 
-                <button type="submit">Reset password</button>   
+                <br />
+                <button className={styles.sub} type="submit">Reset password</button>   
             </form>
             <button className={styles.BacktoLogin} onClick={() => navigate('/')}>Back to login</button>
             <p>{response}</p>        </div>
-        </>
+        </div>
     )
 }
 

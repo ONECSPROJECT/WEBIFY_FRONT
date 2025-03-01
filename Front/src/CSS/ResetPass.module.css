@@ -1,4 +1,4 @@
-body {
+.ResetPassword_container {
   background-color: #0A192F;
   display: flex;
   justify-content: center;
@@ -18,7 +18,7 @@ body {
   align-items: center;
   background-color: white;
   width: 100%;
-  min-width: 600px;
+  max-width: 600px;
   max-height:  450px;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -49,7 +49,7 @@ body {
   height: 40px;
   border-radius: 3px;
   border: none;
-  background-image: url('./assets/padlock.png');
+  background-image: url('../assets/padlock.png');
   background-color: rgb(232, 232, 232);
   background-repeat: no-repeat;
   background-position: 5px center;
@@ -66,7 +66,7 @@ body {
   flex-direction: column;
 }
 
-button {
+.sub {
   width: 100%;
   max-width: 350px;
   height: 45px;
@@ -79,7 +79,7 @@ button {
   color: #0A192F;
 }
 
-button:hover {
+.sub:hover {
   background-color: #52e0bd;
 }
 

@@ -1,4 +1,4 @@
-body {
+.ForgotPassword_container {
   background-color: #0A192F;
   display: flex;
   justify-content: center;
@@ -19,7 +19,7 @@ body {
   align-items: center;
   background-color: white;
   width: 100%;
-  min-width: 600px;
+  max-width: 600px;
   min-height: 300px;
   padding: 1rem;
   border-radius: 10px;
@@ -45,7 +45,7 @@ body {
   height: 40px;
   border-radius: 3px;
   border: none;
-  background-image: url('./assets/mail.png');
+  background-image: url('../assets/mail.png');
   background-color: rgb(232, 232, 232);
   background-repeat: no-repeat;
   background-position: 5px center;
@@ -60,21 +60,24 @@ body {
   max-width: 450px;
   display: flex;
   align-items: center;
+  flex-direction: column;
+
 }
 
-button {
+.sub {
   width: 100%;
-  max-width: 450px;
+  max-width: 350px;
   height: 45px;
   border-radius: 5px;
   border: none;
+  font-size: 1rem;
   background-color: #64ffda;
   font-weight: 700;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-button:hover {
+.sub:hover {
   background-color: #52e0bd;
 }
 
@@ -107,7 +110,7 @@ button:hover {
   align-items: center;
   background-color: #E3FCEF;
   width: 100%;
-  min-width: 600px;
+  max-width: 600px;
   min-height: 350px;
   padding: 2rem;
   border-radius: 10px;
