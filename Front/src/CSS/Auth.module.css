@@ -42,8 +42,8 @@ body {
   }
   
   .container .Header {
-    transform: translateY(50px);
-    font-size: 1.5rem;
+     /* transform: translateY(50px);  */
+     font-size: 1.5rem; 
   }
   
   .email, .password {
