@@ -42,14 +42,14 @@
   }
   
   .container .Header {
-<<<<<<< HEAD
+
      /* transform: translateY(50px);  */
      font-size: 1.5rem; 
-=======
+
     position: relative;
     top: 3rem;    
     font-size: 1.5rem;
->>>>>>> 1145e885ff2a5086c4e917b256073deda3177c57
+
   }
   
   .email, .password {
