@@ -1,4 +1,4 @@
-body {
+.Login_container {
     background-color: #0A192F;
     display: flex;
     justify-content: center;
@@ -10,7 +10,6 @@ body {
     padding: 0 1rem;
     box-sizing: border-box;
   }
-  
   .emailIcon {
     position: absolute;
     width: 20px;
@@ -24,7 +23,7 @@ body {
     flex-direction: column;
     background-color: white;
     width: 100%;
-    min-width: 400px;
+    max-width: 400px;
     height: auto;
     max-height: 400px;
     padding: 1rem;
@@ -33,17 +32,24 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
-  form {
+  .Form {
     width: 100%;
     min-width: 300px;
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
+    align-items: center;
   }
   
   .container .Header {
+<<<<<<< HEAD
      /* transform: translateY(50px);  */
      font-size: 1.5rem; 
+=======
+    position: relative;
+    top: 3rem;    
+    font-size: 1.5rem;
+>>>>>>> 1145e885ff2a5086c4e917b256073deda3177c57
   }
   
   .email, .password {
@@ -60,15 +66,11 @@ body {
     font-size: 0.9em  ;
     box-sizing: border-box;
   }
-  form{
-    display: flex;
-    align-items: center;
-  }
   .email {
-    background-image: url('./assets/mail.png');}
+    background-image: url('../assets/mail.png');}
   
   .password {
-    background-image: url('./assets/padlock.png');}
+    background-image: url('../assets/padlock.png');}
   
   .sub {
     font-size: 1rem;

@@ -28,9 +28,9 @@ function handleForgotPass(){
     
 return(
 
-
+<div className={styles.Login_container}>
 <div className={styles.container}>
-  <form onSubmit={handlesubmit}>
+  <form className={styles.Form} onSubmit={handlesubmit}>
     <span className={styles.Header}>Sign In</span>
 <br /> <br />
     <div className={styles.emailinput}>
@@ -47,7 +47,7 @@ return(
       Forgot Password?</button>
   </form>
 </div>
-
+</div>
  
 )
 
