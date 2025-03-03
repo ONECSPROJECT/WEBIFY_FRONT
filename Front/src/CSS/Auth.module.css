@@ -42,8 +42,8 @@
   }
   
   .container .Header {
-    position: relative;
-    top: 3rem;    
+    /* position: relative;
+    top: 3rem;     */
     font-size: 1.5rem;
   }
   
@@ -108,3 +108,9 @@
   }
   
   
+
+  @media (500px) {
+    .Header .container{
+  
+    }
+  }
