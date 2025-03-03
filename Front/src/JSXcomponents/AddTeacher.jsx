@@ -1,9 +1,4 @@
-<<<<<<< HEAD
-=======
 import { useState } from "react";
-
-
->>>>>>> 656c07a8739e37bad519def7f79a3b8070fc94be
 function AddTeacher(){
 const [fullname,setfullname]=useState("");
 const [state,setstate]=useState("");
@@ -16,8 +11,6 @@ const handleSubmit = async (e) => {
 
     try {
       const response = await axios.post("", {fullname,state,grade,bankAccount});
-
-      
       alert("Teacher added successfully!");
     } catch (error) {
       
