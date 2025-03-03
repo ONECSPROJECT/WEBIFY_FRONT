@@ -42,9 +42,19 @@
   }
   
   .container .Header {
+<<<<<<< HEAD
     /* position: relative;
     top: 3rem;     */
+=======
+
+     /* transform: translateY(50px);  */
+     font-size: 1.5rem; 
+
+    position: relative;
+    top: 3rem;    
+>>>>>>> 656c07a8739e37bad519def7f79a3b8070fc94be
     font-size: 1.5rem;
+
   }
   
   .email, .password {
