@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import { useTeacher } from "./TeacherListCxt";
 function Timetable() {
@@ -20,8 +20,6 @@ async function save(e){
         console.log("error")
     }
 }
-
-
   function handleAddSession() {
     const {day_of_week,start_time,duration_minutes,session_type} = newSession;
     setSchedule(prev=>({...prev,[day_of_week]: [...prev[day_of_week], {start_time,duration_minutes: Number(duration_minutes),session_type}]}));
