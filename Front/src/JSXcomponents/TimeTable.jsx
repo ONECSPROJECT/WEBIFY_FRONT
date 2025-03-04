@@ -1,29 +1,19 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useTeacher } from "./TeacherListCxt";
 function Timetable() {
 
-
-const [teachers, setTeachers] = useState([]);
-const[teacherID, setTeacherID]=useState()
+const {teacherList}=useTeacher();
+const[selectedteacherID, setselectedTeacherID]=useState()
   const [schedule, setSchedule] = useState({
     Sunday:[],Monday:[],Tuesday:[],Wednesday:[], Thursday:[]});
-  const [newSession, setNewSession] = useState({day_of_week: "Sunday", start_time: "08:00:00", duration_minutes: "120", session_type: "Course"});
+  const [newSession, setNewSession] = useState({day_of_week: "Sunday", start_time:"08:00:00", duration_minutes: "120", session_type:"Course"});
 
-useEffect(()=>{
-    async function teacherFetch(e) {
-        e.preventDefault();
-        try{
-            const response= await axios.get('')
-            setTeachers(response.data)}
-        catch(error){
-            console.log("error")}
-    }
-    teacherFetch();
-},[])
+
 async function save(e){
     e.preventDefault()
     try{
-        await axios.post('',{teacherID,schedule})
+        await axios.post('',{selectedteacherID,schedule})
         console.log("Successful save")
     }
     catch(error){
@@ -40,19 +30,8 @@ async function save(e){
     <div>
         <div>
             <h1>Teachers</h1>
-            <ul>{teachers.map(teacher => (
-                <li key={teacher.teacherID}>
-                    <button onClick={() => setTeacherID(teacher.teacherID)}>
-                        {teacher.first_name} {teacher.last_name}
-                    </button>
-    </li>
-  ))}
-</ul>
-
+            <ul>{Object.keys(teacherList).map(teacher =><button key={teacher.teacherID} onClick={setselectedTeacherID(teacher.teacherID)}>{teacher.first_name} {teacher.last_name}</button>)}</ul>
         </div>
-
-
-
 
       <div>
         <h1>Tmetable</h1>

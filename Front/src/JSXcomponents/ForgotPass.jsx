@@ -37,7 +37,7 @@ function ForgotPass(){
       <button className={styles.sub} type="submit">Send Reset Link</button>
     </form>
     <button className={styles.BacktoLogin} onClick={() => backtolog('/')}>Back to login</button>
-    <p>{response}</p>
+    <span>{response}</span>
   </div>
 
   <div ref={CheckRef} className={styles.containerCheck}>
@@ -45,6 +45,8 @@ function ForgotPass(){
     <br />
     <span className={styles.infoText}>Check your email for a password reset link.</span>
   </div>
+  <p>Devoloped by <strong>Webify</strong></p>
+
 </div>
 
 

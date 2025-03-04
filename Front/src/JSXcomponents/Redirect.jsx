@@ -5,14 +5,14 @@ function Redirect(){
     const navigate = useNavigate();
     useEffect(()=>{
         setTimeout(() => {
-            navigate('/Home');
+            navigate('/');
         }, 2000);
     },[navigate])
     return(
         <div className={styles.Redirect_container}>
         <div className={styles.container}>
             <h2 className={styles.Header}>Redirecting...</h2>
-            <p>Please wait while we take you to the login page</p>
+            <span>Please wait while we take you to the login page</span>
             <div className={styles.loader}>
                 </div>
         </div>

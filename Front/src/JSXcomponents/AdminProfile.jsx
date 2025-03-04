@@ -1,4 +1,4 @@
-import { useAdmin } from "./Admin";
+import { useAdmin } from "./AdminCxt";
 
 function AdminProfile(){
 const {adminInfo} =useAdmin();

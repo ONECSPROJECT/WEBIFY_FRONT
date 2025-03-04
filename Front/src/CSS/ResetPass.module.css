@@ -2,6 +2,7 @@
   background-color: #0A192F;
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
   min-height: 100vh;
   color: #0A192F;
