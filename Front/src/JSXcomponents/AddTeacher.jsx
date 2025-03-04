@@ -1,20 +1,15 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import axios from "axios";
-import { useTeacher } from "./TeacherListCxt";
 function AddTeacher(){
 const [fullname,setfullname]=useState("");
 const [state,setstate]=useState("");
 const [grade,setgrade]=useState("");
 const [bankAccount,setbankAccount]=useState("");
-const{setTeacherList}=useTeacher();
 
 const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await axios.post("", {fullname,state,grade,bankAccount});
-      setTeacherList((prev)=>{[...prev, {fullname,state,grade,bankAccount}]});
-      alert("Teacher added successfully!");
     } catch (error) {
       
       alert("Failed to add teacher.");

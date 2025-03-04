@@ -1,14 +1,27 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import { useTeacher } from "./TeacherListCxt";
 function Timetable() {
 
-const {teacherList}=useTeacher();
+
+const [teacherList,setTeacherList]=useState([])
 const[selectedteacherID, setselectedTeacherID]=useState()
   const [schedule, setSchedule] = useState({
     Sunday:[],Monday:[],Tuesday:[],Wednesday:[], Thursday:[]});
   const [newSession, setNewSession] = useState({day_of_week: "Sunday", start_time:"08:00:00", duration_minutes: "120", session_type:"Course"});
 
+
+  useEffect(()=>{
+    async function fetchTeacherList() {
+      try{
+        const response = await axios.get(''); //teachers endpoint
+        setTeacherList(response.data)
+      }
+      catch(error){
+        console.log("error at retreiving teachers")
+      }
+    }
+    fetchTeacherList();
+    },[])
 
 async function save(e){
     e.preventDefault()
@@ -28,7 +41,7 @@ async function save(e){
     <div>
         <div>
             <h1>Teachers</h1>
-            <ul>{Object.keys(teacherList).map(teacher =><button key={teacher.teacherID} onClick={setselectedTeacherID(teacher.teacherID)}>{teacher.first_name} {teacher.last_name}</button>)}</ul>
+            <ul>{teacherList.map((teacher) => (<button key={teacher.teacherID} onClick={() => setselectedTeacherID(teacher.teacherID)}>{teacher.first_name} {teacher.last_name}</button>))}</ul>
         </div>
 
       <div>
