@@ -1,0 +1,8 @@
+.mainContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+.sickleave{
+  display: none;
+}
