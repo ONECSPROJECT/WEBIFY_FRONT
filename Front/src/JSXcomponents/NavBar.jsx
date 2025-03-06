@@ -5,6 +5,7 @@ function NavBar(){
         <nav className={styles.NavBar_container}>
             <NavLink to='/Home'>DashBoard</NavLink>
             <NavLink to='/AddTeacher'>AddTeacher</NavLink>
+            <NavLink to='/TimeTable'>TimeTable</NavLink>
         </nav>
     )
 }

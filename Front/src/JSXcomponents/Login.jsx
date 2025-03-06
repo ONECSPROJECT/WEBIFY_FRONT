@@ -7,9 +7,9 @@ function Login(){
     const navigate=useNavigate();
     const[email,setEmail]=useState('');
     const[password,setpassword]=useState('');
-
 const handlesubmit = async (e)=>{
     e.preventDefault();
+    
 try{
  const response= await axios.post("",{email,password})
  navigate('/Home')
@@ -47,6 +47,7 @@ return(
       Forgot Password?</button>
   </form>
 </div>
+<p>Devoloped by <strong>Webify</strong></p>
 </div>
  
 )

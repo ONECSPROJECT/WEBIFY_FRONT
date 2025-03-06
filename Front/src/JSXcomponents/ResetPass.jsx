@@ -71,7 +71,12 @@ function ResetPass(){
                 <button className={styles.sub} type="submit">Reset password</button>   
             </form>
             <button className={styles.BacktoLogin} onClick={() => navigate('/')}>Back to login</button>
-            <p>{response}</p>        </div>
+            <span>{response}</span>       
+ 
+            </div>
+            <p>Devoloped by <strong>Webify</strong></p>
+
+
         </div>
     )
 }

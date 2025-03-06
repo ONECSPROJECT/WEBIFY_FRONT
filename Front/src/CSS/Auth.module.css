@@ -1,6 +1,7 @@
 .Login_container {
     background-color: #0A192F;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
@@ -42,6 +43,7 @@
   }
   
   .container .Header {
+<<<<<<< HEAD
 
      /* transform: translateY(50px);  */
      font-size: 1.5rem; 
@@ -49,8 +51,22 @@
     /* position: relative;
     top: 3rem;     */
     font-size: 1.5rem;
+=======
+    position: relative;
+    top: 2.5rem;     
+    font-size: 2rem;
+>>>>>>> 3cda6d364c7cf739ef2ca71893ce9b1a14659490
 
   }
+
+  
+@media only screen and (max-width: 1152px) and (max-height:1152px){
+  .container .Header {  
+    top: 0rem;     
+    font-size: 2rem;
+
+  }
+}
   
   .email, .password {
     border: 0.5px solid rgb(211, 211, 211);
@@ -112,4 +128,8 @@
     box-sizing: inherit;
   }
   
-  
+  p{
+    color: white;
+    position: relative;
+    top: 8rem;
+  }

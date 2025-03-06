@@ -1,6 +1,7 @@
 .ForgotPassword_container {
   background-color: #0A192F;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
