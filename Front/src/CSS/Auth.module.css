@@ -43,7 +43,7 @@
   }
   
   .container .Header {
-<<<<<<< HEAD
+
 
      /* transform: translateY(50px);  */
      font-size: 1.5rem; 
@@ -51,11 +51,12 @@
     /* position: relative;
     top: 3rem;     */
     font-size: 1.5rem;
-=======
+
     position: relative;
     top: 2.5rem;     
     font-size: 2rem;
->>>>>>> 3cda6d364c7cf739ef2ca71893ce9b1a14659490
+
+    
 
   }
 

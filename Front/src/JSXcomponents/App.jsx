@@ -7,6 +7,8 @@ import AddTeacher from './AddTeacher';
 import TimeTable from './TimeTable';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
+import Sidebar from './SIdebar';
+
 
 function App() { 
   return (
@@ -20,7 +22,7 @@ function App() {
         <Route path='/ResetPass/Redirect' element={<Redirect />}></Route>
         <Route path='/AddTeacher' element={<AddTeacher/>}></Route>
         <Route path='/TimeTable' element={<TimeTable/>}></Route>
-        
+        <Route path='/sidebar' element={<Sidebar/>} ></Route>
       </Routes>
   );
 }
