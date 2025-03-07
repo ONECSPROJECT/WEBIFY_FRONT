@@ -7,7 +7,10 @@ import AddTeacher from './AddTeacher';
 import TimeTable from './TimeTable';
 import { Routes, Route } from 'react-router-dom';
 import Home from './Home';
-import Sidebar from './SIdebar';
+import Sidebar from './Sidebar';
+import Dashboard from './Dashbord';
+import AdminPage from './AdminPage';
+
 
 
 function App() { 
@@ -23,6 +26,8 @@ function App() {
         <Route path='/AddTeacher' element={<AddTeacher/>}></Route>
         <Route path='/TimeTable' element={<TimeTable/>}></Route>
         <Route path='/sidebar' element={<Sidebar/>} ></Route>
+        <Route path='/Dashboard' element={<Dashboard/>}></Route>
+        <Route path='/adminpage' element={<AdminPage/>}></Route>
       </Routes>
   );
 }

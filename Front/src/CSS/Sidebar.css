@@ -68,3 +68,6 @@ flex-direction: column-reverse;
 align-items: center;
 
   } 
+  .adpage{
+    display:flex;
+  }
