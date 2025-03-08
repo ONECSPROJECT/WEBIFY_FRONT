@@ -6,11 +6,12 @@ import Sidebar from "./Sidebar";
 import "../CSS/Sidebar.css"
 function AdminPage(){
 return(
-<div className="adpage">
-    <Sidebar/>
-    <Dashboard/>
-</div>);
-};
+<>
+<Sidebar/>
+<Dashboard/>
+</>
+)
+}
 export default AdminPage;
 
 

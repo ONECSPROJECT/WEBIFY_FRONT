@@ -1,4 +1,4 @@
-import styles from "../CSS/CalendarView.module.css";
+import styles from "../CSS/ManageAbsences.module.css";
 
 function SickLeave({teacher}) {
   return (

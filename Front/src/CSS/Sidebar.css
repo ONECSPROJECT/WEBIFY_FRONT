@@ -1,73 +1,72 @@
 .sidebar {
-    width:25%;
-    height: 100vh;
-    background-color:#091F44;
-   color:#FFFFFF;
-    padding: 0px;
- 
-    position: fixed;
-   display:flex;
-   flex-direction: column;
-    justify-content:space-around; 
-  }
-  
-  .sidebar h2 {
+  font-family: 'Roboto';
+  width: 25%;
+  height: 100vh;
+  background-color: #091F44;
+  color: #FFFFFF;
+  padding: 0px;
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 
-    font-size:30px;
-    margin-bottom: 40px;
-    margin-left:17%;
-    text-decoration: underline;
-  text-decoration-color: #64FFDA; 
+.sidebar h2 {
+  font-size: 30px;
+  margin-bottom: 40px;
+  margin-left: 17%;
+  text-decoration: underline;
+  text-decoration-color: #64FFDA;
   text-decoration-thickness: 2px;
-  
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar ul li {
-    padding: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    color:#FFFFFF;
-    display:flex;
-    align-items: center;
-    
-    margin-left: 17%;
-    
-    width:65%;
-    font-size:18px;
-  }
-  
-  .sidebar ul li:hover {
-    background-color: #6cb9a7;
-    
-  }
-  
-  .logout {
-    background-color: #E53945;
-    color: white;
-    border: none;
-    padding: 10px;
-    width: 60%;
-    margin-top:-35px;
-    border-radius: 5PX;
-  }
-  
-  .logout:hover {
-    background-color: #E53945;
-  }
-  .icon{margin-right: 5PX;}
-   .btnlogout{
-  
-    display:flex;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.nav-item {
+  padding: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  margin-left: 17%;
+  width: 65%;
+  font-size: 18px;
+  text-decoration: none; /* Remove default link underline */
+}
+
+.nav-item:hover {
+  background-color: #6cb9a7;
+}
+
+.icon {
+  margin-right: 5px;
+}
+.logout {
+  background-color: #E53945;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 60%;
+  margin-top:-35px;
+  border-radius: 5PX;
+}
+
+.logout:hover {
+  background-color: #E53945;
+}
+.icon{margin-right: 5PX;}
+ .btnlogout{
+
+  display:flex;
 flex-direction: column-reverse;
 
 align-items: center;
 
-  } 
-  .adpage{
-    display:flex;
-  }
+} 
+.adpage{
+  display:flex;
+}

@@ -11,8 +11,14 @@ const handlesubmit = async (e)=>{
     e.preventDefault();
     
 try{
- const response= await axios.post("",{email,password})
- navigate('/Home')
+ const response= await axios.post("",{email,password}) //respond with a token and a role
+ localStorage.setItem("authToken",response.data.token)
+ if(response.data.role==="admin"){
+  navigate('./AdminPage')
+ }
+ else{
+  navigate('./TeacherPage')
+ }
 }
 catch(erreur){
     console.log("erreur verifier le email ou mot pass")
@@ -38,7 +44,7 @@ return(
     </div>
 <br />
     <div className={styles.passwordinput}>
-      <input className={styles.password} type="text" placeholder="Password"value={password} onChange={(e) => setpassword(e.target.value)}/>
+      <input className={styles.password} type="password" placeholder="Password"value={password} onChange={(e) => setpassword(e.target.value)}/>
     </div>
 <br />
     <button className={styles.sub} type="submit">

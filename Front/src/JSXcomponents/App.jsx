@@ -4,30 +4,24 @@ import ForgotPass from './ForgotPass';
 import ResetPass from './ResetPass';
 import Redirect from './Redirect';
 import AddTeacher from './AddTeacher';
-import TimeTable from './TimeTable';
 import { Routes, Route } from 'react-router-dom';
-import Home from './Home';
-import Sidebar from './Sidebar';
-import Dashboard from './Dashbord';
 import AdminPage from './AdminPage';
-
-
+import ManageAbsences from './ManageAbsences';
+import GlobalTimeTable from './GlobalTimeTable';
+import ManageTeachers from './ManageTeachers';
 
 function App() { 
   return (
-
       <Routes>
         <Route path="/ForgotPass" element={< ForgotPass/>} />
         <Route path="/" element={<Login />} />
-        
-        <Route path="/Home" element={<Home />} />
         <Route path='/ResetPass/:token' element={<ResetPass />}></Route>
         <Route path='/ResetPass/Redirect' element={<Redirect />}></Route>
         <Route path='/AddTeacher' element={<AddTeacher/>}></Route>
-        <Route path='/TimeTable' element={<TimeTable/>}></Route>
-        <Route path='/sidebar' element={<Sidebar/>} ></Route>
-        <Route path='/Dashboard' element={<Dashboard/>}></Route>
         <Route path='/adminpage' element={<AdminPage/>}></Route>
+        <Route path='/adminpage/manage-absences' element={<ManageAbsences/>}></Route>
+        <Route path='/adminpage/manage-teachers' element={<ManageTeachers/>}></Route>
+        <Route path='/adminpage/global-timetable' element={<GlobalTimeTable/>}></Route>
       </Routes>
   );
 }

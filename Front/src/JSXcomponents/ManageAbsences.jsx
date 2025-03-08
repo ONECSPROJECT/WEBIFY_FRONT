@@ -2,11 +2,11 @@ import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
 import axios from "axios";
 import "react-calendar/dist/Calendar.css";
-import styles from "../CSS/CalendarView.module.css";
+import styles from "../CSS/ManageAbsences.module.css";
 import SingleDay from "./SingleDay";
 import SickLeave from "./SickLeave";
-
-function CalendarView() {
+import Sidebar from "./Sidebar";
+function ManageAbsences() {
   const [date, setDate] = useState(new Date());
   const [teachersList, setTeachersList] = useState([]);
   const [selectedOption, setSelectedOption] = useState("singleDay");
@@ -37,7 +37,9 @@ function CalendarView() {
   }, [date]);
 
   return (
-    <div className={styles.mainContainer}>
+    <>
+    <Sidebar/>
+        <div className={styles.mainContainer}>
       {/* OPTIONS */}
       <h2>Options</h2>
       <label>
@@ -67,7 +69,8 @@ function CalendarView() {
         ))}
       </ul>
     </div>
+    </>
   );
 }
 
-export default CalendarView;
+export default ManageAbsences;
