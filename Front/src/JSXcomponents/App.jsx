@@ -9,6 +9,7 @@ import AdminPage from './AdminPage';
 import ManageAbsences from './ManageAbsences';
 import GlobalTimeTable from './GlobalTimeTable';
 import ManageTeachers from './ManageTeachers';
+import Tableteacher from './Tableteacher';
 
 function App() { 
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path='/adminpage/manage-absences' element={<ManageAbsences/>}></Route>
         <Route path='/adminpage/manage-teachers' element={<ManageTeachers/>}></Route>
         <Route path='/adminpage/global-timetable' element={<GlobalTimeTable/>}></Route>
+        <Route path='/table' element={<Tableteacher/>}></Route>
       </Routes>
   );
 }
