@@ -121,7 +121,6 @@ function ManageAbsences() {
       </label>
       </div>
 
-
       {/*SEARCH FOR A TEACHER*/}
       <div className={styles.search}>
         <IoMdSearch className={styles.searchIcon}/>

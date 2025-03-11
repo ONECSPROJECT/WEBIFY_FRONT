@@ -7,6 +7,7 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { IoCloseCircle } from "react-icons/io5";
 
 function SingleDay({teacher, day, date, onClose}) {
+  
     const [session,setSessions]=useState([]) //sessions are an array of objects ig {Module,startTime,Duration,presentFlag} present by default in the database
     const [absentSession, setAbsentSession] =useState({})
 //     useEffect(()=> {
