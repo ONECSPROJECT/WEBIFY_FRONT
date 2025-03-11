@@ -225,9 +225,14 @@ align-items: center;
 }
 .delete{color:#FB6565;
 }
+<<<<<<< HEAD
 .delete:hover{
 position: absolute;
 border:solid 1px #FB6565;
+=======
+.delete:hover{border:solid 1px #FB6565;
+              position: absolute;
+>>>>>>> c00221c048c5e7c7c025b2897cf1175f8fb3e59d
 
 }
 .edit:hover{
