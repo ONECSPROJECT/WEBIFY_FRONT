@@ -8,7 +8,8 @@
     flex-direction: column;
     align-items: center;
     
-    
+    font-family: 'Roboto', sans-serif;
+
   }
   
   h1 {
@@ -224,7 +225,9 @@ align-items: center;
 }
 .delete{color:#FB6565;
 }
-.delete:hover{border:solid 1px #FB6565;
+.delete:hover{
+position: absolute;
+border:solid 1px #FB6565;
 
 }
 .edit:hover{
