@@ -1,14 +1,137 @@
+*{
+  transition: 0.1s;
+}
+
 .mainContainer {
-  background-color: #0A192F;
+  background-color: #d9d9d9;
   display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-left: auto;
   min-height: 100vh;
-  color: white ;
+  max-width: 74.5%;
   font-family: 'Roboto', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  margin: 0;
-  box-sizing: border-box;
 }
 
 
-.sickleave{
+.mainContainer .calendar_container{
   display: none;
+}
+
+
+.search {
+  padding: 10px;
+  background-color: white;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 300px;
+  transform: translateX(-380px);
+  border-radius: 10px;
+  height: 30px;
+
+}
+
+.search input {
+  height: 30px;
+  border: none;
+  outline: none;
+  padding: 5px;
+  font-size: 16px;
+  width: 300px;
+
+}
+
+.search .searchIcon {
+  transform: scale(1.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  font-weight: 1000;
+  padding-right: 20px;
+}
+
+.date {
+  font-weight: 1000;
+  text-align: right;
+  margin-top: 10px;
+  margin-left: auto;
+  padding-right: 20px;
+}
+
+.date input {
+  padding: 8px;
+  margin-top: 5px;
+  width: 100%;
+  max-width: 100px;
+}
+
+.date .secondDate {
+  margin-top: 10px;
+}
+
+
+.teachers{
+  color: #0A192F;
+    list-style-type: none;
+    width: 280%;
+    transform: translateX(-25em);
+    z-index: -1;
+
+  }
+ 
+  
+  
+.teacher{
+  border-radius: 0.4em;
+  padding: 35px;
+  border: solid 0.5px grey;
+  background-color: white;
+  box-shadow: 1px 2px 5px black;
+}
+
+.teacher:hover{
+  padding: 30px;
+  border: solid 0.5px grey;
+  background-color: rgb(217, 217, 217);
+  cursor: pointer;
+}
+.teacher:active{
+  padding: 30px;
+  border: solid 0.5px grey;
+  background-color: rgb(92, 92, 92);
+  cursor: pointer;
+  transform: scale(0.95);
+}
+
+
+.teacher strong{
+  position: relative;
+  margin-left: 2rem;
+}
+
+.pfp{
+  background-color: transparent;
+  border-radius: 50%;
+  height: 1.7em;
+  width: 1em;
+  transform: scale(2);
+  margin-left: 3rem;
+
+}
+.pfp:hover{
+  background-color: transparent;
+  border-radius: 50%;
+  height: 1.7em;
+  width: 1em;
+  background-color: rgb(142, 142, 142);
+cursor: pointer;
+  transform: scale(2.2);
 }
