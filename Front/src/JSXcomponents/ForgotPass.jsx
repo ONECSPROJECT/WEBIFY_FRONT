@@ -13,14 +13,16 @@ function ForgotPass(){
     async function handleF(e) {
         e.preventDefault();
         try{
-            const data = await axios.post("",{email});
+            const respons = await axios.post("http://localhost:3000/api/user/request-reset-password",{email});
+            console.log(respons.data.message)
             setResponse("Check your email for the reset link");
                         ResetRef.current.style.display="none";
             CheckRef.current.style.display="flex"
 
         }
         catch(error){
-            setResponse("Error, retry.")
+            setResponse("Error, retry.", error)
+            alert(error.message)
         }
         
     }

@@ -9,11 +9,15 @@ function Login(){
     const[password,setpassword]=useState('');
 const handlesubmit = async (e)=>{
     e.preventDefault();
-    
+    if (!email ||!password){
+      console.log("Email and password must not be empty")
+      return;
+  }
 try{
- const response= await axios.post("https://localhost:3000/login",{email,password}) //respond with a token and a role
+ const response= await axios.post("http://localhost:3000/api/user/login",{email,password}) //respond with a token and a role
+ console.log("Login Response:", response.data.data.user.role);
  localStorage.setItem("authToken",response.data.token)
- if(response.data.role==="admin"){
+ if(response.data.data.user.role==="admin"){
   navigate('./AdminPage')
  }
  else{
@@ -21,7 +25,7 @@ try{
  }
 }
 catch(erreur){
-    console.log("erreur verifier le email ou mot pass")
+    console.log("erreur verifier le email ou mot pass", erreur)
 }
 
 }
