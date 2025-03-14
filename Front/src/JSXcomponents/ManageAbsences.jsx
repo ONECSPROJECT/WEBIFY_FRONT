@@ -36,7 +36,7 @@ function ManageAbsences() {
       setComponent(null);
       return;
     }
-    if (selectedOption==="singleDay"){setComponent(<SingleDay teacher={selectedTeacher} day={dateToDay(date)} date={formattedDate} onClose={()=>setComponent(null)} />);
+    if(selectedOption==="singleDay"){setComponent(<SingleDay teacher={selectedTeacher} day={dateToDay(date)} date={formattedDate} onClose={()=>setComponent(null)} />);
     } 
     
     else{
@@ -122,20 +122,14 @@ function ManageAbsences() {
       </div>
 
       {/*SEARCH FOR A TEACHER*/}
+      <div className={styles.row}>
       <div className={styles.search}>
         <IoMdSearch className={styles.searchIcon}/>
         <input  type="text" onChange={(e)=>setSearch(e.target.value)} placeholder="Search for a teacher..." />
         {console.log(search)}
       </div>
-
-      {/*CONDITIONALLY RENDER COMPONENT */}
-      <div className={styles.components}>
-        {component}
-
-        </div>
-
-        {/* CONDITIONALLY RENDER DATE FIELD(S)*/}
-        {selectedOption==="singleDay"?(
+              {/* CONDITIONALLY RENDER DATE FIELD(S)*/}
+              {selectedOption==="singleDay"?(
                 <div className={styles.date}>
                   <label htmlFor=""><FaCalendarDays/>Select a date &nbsp;</label>
                 <input type="date" value={date.toISOString().split("T")[0]} onChange={handleInputChange} />        
@@ -146,6 +140,14 @@ function ManageAbsences() {
           <br /> <input className={styles.secondDate} type="date" value={endDate.toISOString().split("T")[0]} onChange={handleEndDateChange}/>
         </div>
       )}
+</div>
+      {/*CONDITIONALLY RENDER COMPONENT */}
+      <div className={styles.components}>
+        {component}
+
+        </div>
+
+
     
   
 
