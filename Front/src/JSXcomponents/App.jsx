@@ -16,8 +16,8 @@ function App() {
       <Routes>
         <Route path="/ForgotPass" element={< ForgotPass/>} />
         <Route path="/" element={<Login />} />
-        <Route path='/ResetPass/:token' element={<ResetPass />}></Route>
-        <Route path='/ResetPass/Redirect' element={<Redirect />}></Route>
+        <Route path='/ResetPass' element={<ResetPass />} />
+        <Route path='/Redirect' element={<Redirect />}></Route>
         <Route path='/AddTeacher' element={<AddTeacher/>}></Route>
         <Route path='/adminpage' element={<AdminPage/>}></Route>
         <Route path='/adminpage/manage-absences' element={<ManageAbsences/>}></Route>

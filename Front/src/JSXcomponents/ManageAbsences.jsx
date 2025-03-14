@@ -40,7 +40,7 @@ function ManageAbsences() {
     } 
     
     else{
-      setComponent(<SickLeave teacher={selectedTeacher} />);
+      setComponent(<SickLeave teacher={selectedTeacher} startDate={startDate.toISOString().split("T")[0]} endDate={endDate.toISOString().split("T")[0]} onClose={()=>setComponent(null)} />);
     }
   },[selectedTeacher, selectedOption,date]);
 
