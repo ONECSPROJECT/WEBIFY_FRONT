@@ -6,13 +6,14 @@ import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 
 function Tableteacher() {
-  const [fullname, setfullname] = useState("");
+  const [first_name, setfirstname] = useState("");
+  const [last_name, setlastname] = useState("");
   const [email, setemail] = useState("");
-  const [ccp, setccp] = useState("");
+  const [payment_information, setccp] = useState("");
   const [password, setpassword] = useState("");
-  const [state, setstate] = useState("");
+  const [state, setstate] = useState("Intérieur");
   const [grade, setgrade] = useState("");
-
+  const [faculty, setfaculty]=useState("esi-sba")
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [search, setSearch] = useState("");
@@ -90,8 +91,8 @@ function Tableteacher() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://your-backend-api.com/teachers", { fullname, email, password, ccp, grade, state });
-      alert("Teacher added successfully!");
+      await axios.post("http://localhost:3000/api/user/register", {first_name, last_name, state, payment_information, faculty, email, password, role:"teacher" });
+      alert("Teacher added successfully!"); 
       // fetchTeachers();
     } catch (error) {
       alert("Failed to add teacher.");
@@ -128,20 +129,22 @@ function Tableteacher() {
               <AiOutlineClose className="close-icon" onClick={() => setShowModal(false)} />
             </div>
             <form onSubmit={handleSubmit}>
-              <label>Full name</label>
-              <input type="text" value={fullname} onChange={(e) => setfullname(e.target.value)} />
+              <label>First name</label>
+              <input type="text" value={first_name} onChange={(e) => setfirstname(e.target.value)} />
+              <label>Last name</label>
+              <input type="text" value={last_name} onChange={(e) => setlastname(e.target.value)} />
               <label>Email</label>
               <input type="email" value={email} onChange={(e) => setemail(e.target.value)} />
               <label>Password</label>
               <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} />
               <label>CCP</label>
-              <input type="text" value={ccp} onChange={(e) => setccp(e.target.value)} />
+              <input type="text" value={payment_information} onChange={(e) => setccp(e.target.value)} />
               <label>Grade</label>
               <input type="text" value={grade} onChange={(e) => setgrade(e.target.value)} />
               <label>State</label>
               <select value={state} onChange={(e) => setstate(e.target.value)}>
-                <option value="Intérieur">Intérieur</option>
-                <option value="Exterieur">Exterieur</option>
+                <option value="Intérieur" onSelect={()=>setfaculty("esi-sba")}>Intérieur</option>
+                <option value="Exterieur" onSelect={()=>setfaculty("uni-sba")}>Exterieur</option>
               </select>
               <div className="btnddiv">
                 <div className="modal-buttons">
