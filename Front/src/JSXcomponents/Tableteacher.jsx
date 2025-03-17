@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import "../CSS/Tableteacher.css";
 import { FaSearch } from "react-icons/fa";
 import { FaEdit, FaTrash } from "react-icons/fa";
@@ -6,6 +6,7 @@ import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 
 function Tableteacher() {
+  const [teachers, setTeachers] = useState([]);
   const [first_name, setfirstname] = useState("");
   const [last_name, setlastname] = useState("");
   const [email, setemail] = useState("");
@@ -24,21 +25,23 @@ function Tableteacher() {
     setShowEditModal(true);
   };
 
-// // Fetch teachers from backend
-// const fetchTeachers = async () => {
-//   try {
-//     const response = await axios.get("http://your-backend-api.com/teachers");
-//     setTeachers(response.data);
-//   } catch (error) {
-//     console.error("Error fetching teachers:", error);
-//   }
-// };
+  const fetchTeachers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/user/fetch-table-teachers");
+      const transformedData = response.data.map(teacher => ({
+        ...teacher,
+        fullname: `${teacher.full_name}`
+      }));
+      setTeachers(transformedData);
+    } catch (error) {
+      console.error("Error fetching teachers:", error);
+    }
+  };
+  
 
-// useEffect(() => {
-//   fetchTeachers();
-// }, []);
-
-
+ useEffect(() => {
+   fetchTeachers();
+ }, []);
 
 
   // Function to handle input changes
@@ -62,12 +65,6 @@ function Tableteacher() {
       console.error("Error updating teacher:", error);
     }
   };
-  // Manage teachers as a state
-  const [teachers, setTeachers] = useState([
-    { id: 1, fullName: "Teacher One", email: "teacher1@example.com", grade: "Professor", ccp: "123456789", state: "Intérieur" },
-    { id: 2, fullName: "Teacher Two", email: "teacher2@example.com", grade: "Professor", ccp: "987654321", state: "Exterieur" },
-    { id: 3, fullName: "Teacher Three", email: "teacher3@example.com", grade: "Professor", ccp: "123123123", state: "Intérieur" },
-  ]);
 
   const handleDeleteClick = (teacher) => {
     setSelectedTeacher(teacher);
@@ -93,14 +90,14 @@ function Tableteacher() {
     try {
       await axios.post("http://localhost:3000/api/user/register", {first_name, last_name, state, payment_information, faculty, email, password, role:"teacher" });
       alert("Teacher added successfully!"); 
-      // fetchTeachers();
+       fetchTeachers();
     } catch (error) {
       alert("Failed to add teacher.");
     }
   };
 
   const filteredTeachers = teachers.filter((teacher) =>
-    teacher.fullName.toLowerCase().includes(search.toLowerCase())
+    teacher.fullname.toLowerCase().includes(search.toLowerCase())
   );
 
   return (
@@ -142,10 +139,16 @@ function Tableteacher() {
               <label>Grade</label>
               <input type="text" value={grade} onChange={(e) => setgrade(e.target.value)} />
               <label>State</label>
-              <select value={state} onChange={(e) => setstate(e.target.value)}>
-                <option value="Intérieur" onSelect={()=>setfaculty("esi-sba")}>Intérieur</option>
-                <option value="Exterieur" onSelect={()=>setfaculty("uni-sba")}>Exterieur</option>
-              </select>
+              <select value={state} onChange={(e) => {const selectedValue = e.target.value;
+                setstate(selectedValue);
+                if(selectedValue === "Intérieur") {
+                  setfaculty("esi-sba");} else{
+                    setfaculty("uni-sba");}
+                    }}>
+                      <option value="Intérieur">Intérieur</option>
+                      <option value="Exterieur">Exterieur</option>
+                      </select>
+
               <div className="btnddiv">
                 <div className="modal-buttons">
                   <button type="submit" className="submit-btn">
@@ -233,10 +236,10 @@ function Tableteacher() {
         <tbody>
           {filteredTeachers.map((teacher) => (
             <tr key={teacher.id}>
-              <td>{teacher.fullName}</td>
+              <td>{teacher.fullname}</td>
               <td>{teacher.email}</td>
               <td>{teacher.grade}</td>
-              <td>{teacher.ccp}</td>
+              <td>{teacher.payment_information}</td>
               <td>{teacher.state}</td>
               <td>
                 <button className="edit" onClick={() => handleEditClick(teacher)}>
