@@ -7,7 +7,6 @@ import styles from "../CSS/ManageAbsences.module.css";
 import SingleDay from "./SingleDay";
 import SickLeave from "./SickLeave";
 import Sidebar from "./Sidebar";
-import {teachers} from './TeacherTest.jsx'
 import { GoPerson } from "react-icons/go";
 import { IoMdSearch } from "react-icons/io";
 import { FaCalendarDays } from "react-icons/fa6";
@@ -44,6 +43,25 @@ function ManageAbsences() {
     }
   },[selectedTeacher, selectedOption,date]);
 
+  const fetchAllTeachers = async () => {
+    try {
+      const response = await axios.get("http://localhost:3000/api/user/fetch-teachers");
+      setTeachersList(response.data);
+    } catch (error) {
+      console.error("Error fetching teachers:", error);
+    }
+  };
+  
+
+ useEffect(() => {
+   if(selectedOption==="sickLeave"){
+    fetchAllTeachers();
+   }
+   else{
+    fetchSelectiveTeachers();
+   }
+ }, [selectedOption,date]);
+
 
 
   function handleStartDateChange(e) {
@@ -68,20 +86,20 @@ function ManageAbsences() {
     setSelectedTeacher(null);/*Reset selected teacher when switching options*/
   };
   
-  useEffect(() => {
-    async function fetchTeachers() {
+  
+     async function fetchSelectiveTeachers() {
       try {
-        const formattedDate = date.toISOString().split("T")[0]; //Format date
-        const response = await axios.post("",{selectedOption: selectedOption, date: formattedDate,day: dateToDay(date),}); //Start with the option, if it's a long term absence, then show all teachers, else use the formatted date to exclude holidays and sock leaves, and then filter the teachers by the day
-        setTeachersList(response.data);
+       const formattedDate = date.toISOString().split("T")[0]; //Format date
+         const response = await axios.post("",{selectedOption: selectedOption, date: formattedDate,day: dateToDay(date),}); //Start with the option, if it's a long term absence, then show all teachers, else use the formatted date to exclude holidays and sock leaves, and then filter the teachers by the day
+       setTeachersList(response.data);
       }
       
       catch (error) {
         console.log("error");
       }
-    }
-    fetchTeachers();
-  }, [selectedOption,date]);
+   }
+    
+ 
 
   function handleInputChange(e) {
     const newDate = e.target.value;
@@ -162,16 +180,16 @@ function ManageAbsences() {
       {/*TEACHERS LIST (it'll filter out the teacher as the search bar changes) */} 
       <div className={styles.teacherList}>
       <ul className={styles.teachers}>
-        {teachers.filter((teacher)=>{
+        {teachersList.filter((teacher)=>{
           return search.toLowerCase()===''? teacher: teacher.last_name.toLowerCase().includes(search)
         }).map((teacher) => (
-          <li className={styles.teacher} key={teacher.teacherID} onClick={() => setSelectedTeacher(teacher)}>
+          <li className={styles.teacher} key={teacher.user_id} onClick={() => setSelectedTeacher(teacher)}>
            <button className={styles.pfp} onClick={(e) =>{e.stopPropagation()
            setClickedTeacher(teacher)
            teacherPFP()
 }}>
            <GoPerson />
-           </button> <strong>{teacher.last_name} {teacher.first_name}</strong></li>
+           </button> <strong>{teacher.first_name} {teacher.last_name}</strong></li>
         ))}
       </ul>
       </div>

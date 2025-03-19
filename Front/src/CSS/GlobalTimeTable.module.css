@@ -5,3 +5,156 @@
     width: 74%;
     height: 100vh;
 }
+
+.modal_overlay {
+    position: fixed;
+   top: 0;
+   left: 0; 
+    width: 75%;
+    margin-left: 25%;
+   height: 100%; 
+   background: rgba(59, 59, 59, 0.5);
+    display: flex;
+   justify-content:center;
+   align-items: center; 
+   font-family: 'Roboto', sans-serif;
+ }
+
+ .modal {
+    background: white;
+   
+    padding-top:0px ;
+    padding-bottom:0px ;
+    padding-left:40px ;
+    padding-right: 40px;
+    border-radius: 10px;
+    width: 50%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    height: 100vh;
+   
+  }
+  
+  .modal h2 {
+    margin-bottom: 10px;
+    color:#0A192F;
+    font-size: 30px;
+    font-weight: 700;
+  }
+
+
+  .modaledit{  
+    background: white;
+   
+    padding-top:0px ;
+    padding-bottom:0px ;
+    padding-left:40px ;
+    padding-right: 40px;
+    border-radius: 10px;
+    width: 60%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    height: 90vh;
+  }  
+  .modaledit input,
+  .modaledit select {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 7px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    height:10px;
+  }
+  /* Input Fields */
+  .modal input,
+  .modal select {
+    width: 95%;
+    padding: 10px;
+    margin-bottom: 7px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    height:10px;
+  }
+  .modal input:hover{
+    border: 1px solid #2DD4BF;
+    background-color: #f1f1f3;
+  }
+  .modal select:hover{
+    border: 1px solid #2DD4BF;
+    background-color: #f1f1f3;
+  }
+  .modaledit input:hover{
+    border: 1px solid #2DD4BF;
+    background-color: #f1f1f3;
+  }
+  .modaledit select:hover{
+    border: 1px solid #2DD4BF;
+    background-color: #f1f1f3;
+  }
+  
+  /* Modal Buttons */
+  .modal-buttons {
+    display: flex;
+    flex-direction: row-reverse;
+   justify-content:space-between;
+   width:38%;
+    
+  }
+  .btndiv{
+    display:flex;
+    justify-content: flex-end;
+    
+  }    
+  
+  .closebtn {
+    background-color: #F5F5F5;
+    color: #828283;
+    padding: 8px 12px;
+    border:solid 1px #828283 ;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .submitbtn {
+    background-color: #2DD4BF;
+    color: #FFFFFF;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+
+  .delete{
+    position: absolute;
+  }
+  .delete:hover{
+    color: chocolate;
+  }
+
+
+  .modaldelete {
+    position: fixed;
+      top: 0;
+      left: 0; 
+       width: 75%;
+       margin-left: 25%;
+      height: 100%; 
+      background: rgba(86, 86, 86, 0.5);
+       display: flex;
+      justify-content:center;
+      align-items: center;  
+      font-family: 'Roboto', sans-serif;
+  }
+  
+  .modaldelete-content {
+    background: #FFFFFF;
+    padding-left: 50px;
+    padding-right: 50px;
+    border-radius: 8px;
+    text-align: center;
+    width:58%;
+    padding-top:20px ;
+    padding-bottom: 30px;
+    
+  }
