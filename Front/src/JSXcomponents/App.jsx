@@ -10,6 +10,9 @@ import ManageAbsences from './ManageAbsences';
 import GlobalTimeTable from './GlobalTimeTable';
 import ManageTeachers from './ManageTeachers';
 import Tableteacher from './Tableteacher';
+import Settings from './settings';
+import Settingscomponents from './settingscomponents';
+import Settingscomp from './settingscomponents';
 
 function App() { 
   return (
@@ -24,6 +27,8 @@ function App() {
         <Route path='/adminpage/manage-teachers' element={<ManageTeachers/>}></Route>
         <Route path='/adminpage/global-timetable' element={<GlobalTimeTable/>}></Route>
         <Route path='/table' element={<Tableteacher/>}></Route>
+        <Route path='/adminpage/settings' element={<Settings/>}></Route>
+        <Route path='/adminpage/comp' element={<Settingscomp/>}></Route>
       </Routes>
   );
 }

@@ -14,10 +14,11 @@
 .sidebar h2 {
   font-size: 30px;
   margin-bottom: 40px;
-  margin-left: 17%;
+  margin-left: 0px;
   text-decoration: underline;
   text-decoration-color: #64FFDA;
   text-decoration-thickness: 2px;
+  font-family: 'Roboto';
 }
 
 .sidebar ul {
@@ -25,7 +26,7 @@
   padding: 0;
 }
 
-.nav-item {
+.navitem {
   padding: 15px;
   cursor: pointer;
   transition: 0.3s;
@@ -38,7 +39,7 @@
   text-decoration: none; /* Remove default link underline */
 }
 
-.nav-item:hover {
+.navitem:hover {
   background-color: #6cb9a7;
 }
 
