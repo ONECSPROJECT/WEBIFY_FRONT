@@ -2,6 +2,347 @@
     display: flex;
     flex-direction: column;
     margin-left: auto;
+    align-items: center;
     width: 74%;
     height: 100vh;
+    font-family: 'Roboto';
 }
+
+.description{
+    letter-spacing: 0.5px;
+    font-weight: 800;
+}
+
+.addModalButton{
+    padding: 10px;
+    display: flex;
+    background-color: #64FFDA;
+    margin-left: 70%;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.addModalButton:hover{
+  transform: scale(1.1);
+  padding: 10px;
+  display: flex;
+  background-color: #64FFDA;
+  margin-left: 70%;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.empty{
+     height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    opacity: 0.7;
+}
+
+.foldericon{
+    position: relative;
+    color: black;
+    transform: scale(4);
+}
+
+.uploadicon{
+    position: relative;
+    max-width: 10%;
+}
+
+.uploadbutton{
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    background-color: #64FFDA;
+    border: none;
+    cursor: pointer;
+    min-width: 100%;
+    border-radius: 5px;
+}
+
+
+.uploadbutton:hover{
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    background-color: black;
+    border: none;
+    cursor: pointer;
+    min-width: 100%;
+    color:  #64FFDA;
+    border-radius: 5px;
+}
+.cancelbutton{
+    padding: 7px;
+    display: flex;
+    justify-content: center;
+    background-color: #FF6B6B;
+    border: none;
+    cursor: pointer;
+    min-width: 100%;
+    border-radius: 5px;
+}
+
+.cancelbutton:hover{
+  padding: 7px;
+  display: flex;
+  justify-content: center;
+  background-color: red;
+  border: none;
+  cursor: pointer;
+  min-width: 100%;
+  border-radius: 5px;
+}
+.text{
+    max-width: fit-content;
+    width:auto;
+}
+
+.textcancel{
+    max-width: fit-content;
+    width:auto;
+    color: white;
+}
+
+.addContainer{
+    color: #0A192F;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    padding: 10px;
+}
+
+.addContainer *{
+    width: 70%;
+}
+.addContainer input{
+    padding: 7px;
+    border-radius: 5px;
+    min-width: 100%;
+
+}
+
+.addContainer select{
+    padding: 7px;
+    border-radius: 5px;
+    min-width: 100%;
+
+
+}
+
+
+
+.editcontainer{
+    color: #0A192F;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    padding: 10px;
+}
+
+.deletecontainer{
+    color: #0A192F;
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    padding: 10px;
+}
+
+.editcontainer *{
+    width: 70%;
+}
+.editcontainer input{
+    padding: 7px;
+    border-radius: 5px;
+    min-width: 100%;
+
+}
+
+.editcontainer select{
+    padding: 7px;
+    border-radius: 5px;
+    min-width: 100%;
+
+
+}
+
+.promotions, .sections, .semesters, .upload{
+    min-width: 110%;
+    transform: translate(-12PX,-10px);
+
+}
+
+.closeicon {
+    position: absolute;
+    top: 10px;
+    max-width: fit-content;
+    max-height: fit-content;
+    right: 10px;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    transform: scale(1.5);
+
+  }
+  
+  .closeicon:hover {
+    position: absolute;
+    transform: scale(1.6);
+    color: red;
+  }
+
+
+.uploadBox {
+    min-width: 103%;
+    height: 100px;
+    border: 2px dashed #64FFDA;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 0px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f9f9f9;
+  }
+.xlsicon{
+    position: relative;
+    transform: scale(1.5) translateY(10px);
+}
+  .uploadBox p {
+    position: relative;
+    z-index: 1;
+    font-size: 16px;
+    font-weight: bold;
+    color: black;
+  }
+.addContainer .box .buttons{
+    transform: scale(1.1);
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+
+.editcontainer .box .buttons{
+    transform: scale(1.1);
+    min-width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.box {
+    padding: 20px;
+    background-color: white;
+    width: 90%; 
+    max-width: 400px;
+    height: auto; 
+    max-height: 80vh;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    overflow-y: auto;
+    margin-left: 20%;
+  }
+
+  .fileInput {
+    display: none;
+  }
+
+  .timeTables{
+    position: relative;
+    top: 2rem;
+    min-width: 65%;
+  }
+
+  .list{
+    position: relative;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .list li{
+    border-radius: 5px;
+    padding: 10px;
+    padding-left: 30px;
+    box-shadow: 0 0 5px grey;
+    width: 100%;
+  }
+
+  .list li .buttons {
+    display: flex;
+    gap: 20px;
+  }
+
+  .list li .buttons button{
+    padding: 8px;
+    border-radius: 3px;
+    outline: none;
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .list li .buttons button span{
+  transform: translateY(2px)
+  }
+
+  .list li .buttons button div{
+    transform: scale(1.1)  translateY(1px);
+  }
+
+  .list li .buttons .editbutton div{
+    transform: scale(1.1) rotateY(180deg) translateY(1px);
+  }
+
+  .editbutton{
+    width: 8%;
+    background-color: #0A192F;
+    color: white;
+    border: none;
+
+  }
+
+  .deletebutton{
+    color: white;
+    background-color: #FB6565;
+    border: none;
+
+  }
+
+  .downloadbutton{
+    background-color: white;
+    border: #0A192F 1px solid;
+  }
