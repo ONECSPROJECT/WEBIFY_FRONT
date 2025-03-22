@@ -40,7 +40,7 @@
   height:4vh ;
   }
   
-  .addteacher {
+  .add-teacher {
     background-color:#64FFDA;
     color: #0A192F;
     padding: 10px 15px;
@@ -53,7 +53,7 @@
     
   }
   
-  .addteacher:hover {
+  .add-teacher:hover {
     transform: scale(1.1);
   }
   
@@ -100,7 +100,7 @@ align-items: center;
 
   }
 /* new  */
-.modaloverlay {
+.modal-overlay {
      position: fixed;
     top: 0;
     left: 0; 
@@ -252,7 +252,7 @@ align-items: center;
     font-family: 'Roboto', sans-serif;
 }
 
-.modaldeletecontent {
+.modaldelete-content {
   background: #FFFFFF;
   padding-left: 50px;
   padding-right: 50px;

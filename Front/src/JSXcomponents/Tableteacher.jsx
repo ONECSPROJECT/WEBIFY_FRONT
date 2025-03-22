@@ -97,6 +97,7 @@ function Tableteacher() {
     } catch (error) {
       alert("Failed to add teacher.");
     }
+    
   };
 
   const filteredTeachers = teachers.filter((teacher) =>
