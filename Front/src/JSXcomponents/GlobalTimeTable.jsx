@@ -74,15 +74,7 @@ function handleDelete(timetable) {
     });
   }
   
-  function handleEditClick(timetable) {
-    setEditingTimetable(timetable);
-    setshowEditModal(true);
-    setPromo(timetable.promo);
-    setSemester(timetable.semester);
-    setSection(timetable.section);
-    setFileName(timetable.fileName);
-  }
-  
+ 
 
   function editTimeTable(e) {
     e.preventDefault()
