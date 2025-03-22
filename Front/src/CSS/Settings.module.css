@@ -1,0 +1,297 @@
+ .settingscontainer {
+    width: 75%;
+  
+   margin-left:25%;
+    
+    background: #D9D9D9;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Roboto', sans-serif;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+   
+    
+  }
+  
+  .settingscontainer h2 {
+    text-align: center;
+    ;
+    font-weight: 700;
+   color:#0A192F; 
+  font-size: 45px;
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  .settingscard {
+    background: #ffffff;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left:30px ;
+    padding-right: 30px;
+    width:78%;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    height: 80vh; 
+  }
+  .settingscard hr,.card hr{
+    color:#2DD4BF;
+    height: 1px;
+    background-color:#2DD4BF ;
+  }
+  
+  .settingscard h3 {
+    margin-bottom: 15px;
+    color: #091F44;
+    font-size: 28px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-weight: bold;
+    margin-top: 10px;
+  }
+  
+  .settingscontainer input {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    height: 5px;
+  }
+  
+  .savebtn {
+    margin-top: 20px;
+    padding: 10px;
+    background: #0A192F;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 700;
+
+  }
+
+
+  /*code periode */
+ 
+  .content {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    width:84%;
+  }
+  
+  .card {
+    background: white;
+    padding: 20px;
+    padding-top: 5px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    
+  }
+  
+ .card  h3 {
+    font-size: 28px;
+    color: #0A192F;
+    margin-bottom: 15px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+  }
+  .divperiod{
+ display: flex; 
+ flex-direction: column;
+     align-items: center;
+
+  }
+  
+  .period {
+    /* display: flex; */
+    /* align-items: center; */
+    padding: 15px;
+    padding-top: 5px;
+    margin-bottom: 10px;
+    width:90%;
+    background-color: #D9D9D933;
+    height: 15vh;
+
+  }
+  .period h2{
+    font-size: 18px;
+    font-weight: 700;
+    font-family: 'Roboto', sans-serif;
+   text-align: start;
+  }
+  
+  .period label {
+    font-size: 17px;
+    font-weight: 500;
+    
+    color: #0A192F;
+    margin-right: 10px;
+    margin-left: 15px;
+
+  }
+  
+  .period input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 14px;
+    height:2vh;
+    width:36%;
+
+  }
+  
+  .savebtn2 {
+    margin-top: 20px;
+    padding: 10px;
+    background: #0A192F;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 700;
+    width:90%;
+  } 
+  
+  
+  
+  .diviconp{
+display:flex;
+justify-content: space-between;
+
+  }
+  .addBtn{
+    margin-top: 20px;
+    padding: 10px;
+    background: #2DD4BF;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 700;
+
+  }
+
+
+
+  .deleteBtn{height: 22px;
+  background: #FB6565;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color:#ffffff;
+
+
+
+}
+
+
+/* css modal confirm delet */
+.modalconf {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Add a dark overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalContentconf {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: auto;
+}
+
+.modalContentconf h3{
+  font-size: 36px;
+  font-weight: 700;
+  font-family: 'Roboto', sans-serif;
+color:#0A192F;
+
+}
+
+.modalContentconf h1{
+  font-size: 28px;
+  font-weight: 400;
+  font-family: 'Roboto', sans-serif;
+color:#0A192F;
+
+}
+
+.cancelBtnconf {
+  background: #FB6565;
+  color: #FFFFFF;
+  padding: 8px 12px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  font-weight: 600;
+  width:20%;
+  height:auto;
+  font-size: 18px;
+}
+.confirmBtnconf{
+  background:#F5F5F5;
+  padding: 8px 12px;
+  border: none;
+  margin-right: 25px;
+  cursor: pointer;
+  border-radius: 5px;
+  color:#828283;
+  font-weight: 600;
+  width:20%;
+  font-size: 18px;
+  border:1px solid #828283;
+}
+
+
+  
+
+
+.savebtnve{
+  margin-top: 20px;
+  padding: 10px;
+  background: #0A192F;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 700;
+  width:90%;
+}
+  
+.btnddiv{display:flex;
+  justify-content: end;
+  
+  
+  }
+  .dbtnadd{
+    width:90%;
+    display:flex;
+    flex-direction: row;
+    justify-content:end;
+    
+   
+
+  }
+   

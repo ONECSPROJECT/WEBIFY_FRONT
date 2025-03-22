@@ -40,7 +40,7 @@
   height:4vh ;
   }
   
-  .add-teacher {
+  .addteacher {
     background-color:#64FFDA;
     color: #0A192F;
     padding: 10px 15px;
@@ -53,7 +53,7 @@
     
   }
   
-  .add-teacher:hover {
+  .addteacher:hover {
     transform: scale(1.1);
   }
   
@@ -100,7 +100,7 @@ align-items: center;
 
   }
 /* new  */
-.modal-overlay {
+.modaloverlay {
      position: fixed;
     top: 0;
     left: 0; 
@@ -146,8 +146,8 @@ align-items: center;
     height:10px;
   }
   /* Input Fields */
-  .modal input,
-  .modal select {
+  
+  .inputad {
     width: 95%;
     padding: 10px;
     margin-bottom: 7px;
@@ -174,7 +174,7 @@ align-items: center;
   }
   
   /* Modal Buttons */
-  .modal-buttons {
+  .modalbuttons {
     display: flex;
     flex-direction: row-reverse;
    justify-content:space-between;
@@ -183,7 +183,7 @@ align-items: center;
   }
  
   
-  .close-btn {
+  .closebtn {
     background-color: #F5F5F5;
     color: #828283;
     padding: 8px 12px;
@@ -192,7 +192,7 @@ align-items: center;
     cursor: pointer;
   }
   
-  .submit-btn {
+  .submitbtn {
     background-color: #2DD4BF;
     color: #FFFFFF;
     padding: 8px 12px;
@@ -201,10 +201,11 @@ align-items: center;
     cursor: pointer;
     width:32%;
   }
-.lable{
-   color:#000000B2;
-   font-size: 20px;
+.modal label{
+   color:#0A192F;
+   font-size: 16px;
    font-weight: 400;
+   margin-top: 0px;
 }  
 .btnddiv{display:flex;
 justify-content: end;
@@ -217,7 +218,7 @@ justify-content: space-between;
 align-items: center;
 
 }
-.close-icon{
+.closeicon{
     font-size: 28px;
     color:#9F9F9FCC;
 }
@@ -225,9 +226,12 @@ align-items: center;
 }
 .delete{color:#FB6565;
 }
-.delete:hover{
-position: absolute;
-border:solid 1px #FB6565;
+
+.delete:hover{border:solid 1px #FB6565;
+  position: absolute;
+
+
+
 
 }
 .edit:hover{
@@ -248,7 +252,7 @@ border:solid 1px #FB6565;
     font-family: 'Roboto', sans-serif;
 }
 
-.modaldelete-content {
+.modaldeletecontent {
   background: #FFFFFF;
   padding-left: 50px;
   padding-right: 50px;
@@ -287,7 +291,7 @@ button.confirm {
   font-size: 18px;
 }
 
-.modaldelete-content h3 {
+.modaldeletecontent h3 {
   font-size: 27px;
   font-weight: 700;
   color:#0A192F;
@@ -297,7 +301,7 @@ hr{color:#E0E0E0;
 
 
 }
-.modaldelete-content h6 {
+.modaldeletecontent h6 {
   font-size: 24px;
   font-weight: 400;
   color:#0A192F;
@@ -321,7 +325,7 @@ hr{color:#E0E0E0;
   font-size: 30px;
   font-weight: 700;
 }
-.submited-btn {
+.submitedbtn {
   background-color: #2DD4BF;
   color: #FFFFFF;
   padding: 8px 12px;
