@@ -46,6 +46,37 @@ function Settingscomp() {
     }
   };
 
+
+  const [academicPeriods, setAcademicPeriods] = useState({
+    semestre1: { start: "", end: "" },
+    semestre2: { start: "", end: "" },
+    periode1: { start: "", end: "" },
+    periode2: { start: "", end: "" },
+    periode3: { start: "", end: "" },
+  });
+
+
+  const handleInputChange = (period, field, value) => {
+    setAcademicPeriods((prev) => ({
+      ...prev,
+      [period]: { ...prev[period], [field]: value },
+    }));
+  };
+
+  // Send data to backend
+  const handleSave = async () => {
+    try {
+      await axios.post("http://your-backend-api.com/save-periods", academicPeriods);
+      alert("Data saved successfully!");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert("Failed to save data.");
+    }
+  };
+
+
+
+
   const [vacations, setVacations] = useState([]);
   const [exams, setExams] = useState([]);
 
@@ -130,8 +161,81 @@ function Settingscomp() {
           <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
           <button type="submit" className={styles.savebtn}>Save Changes</button>
         </form>
+
+
+        {/* semestre and period  */}
+        
+
+        
       </div>
       <main className={styles.content}>
+
+      <section className={styles.card}>
+          <h3>Academic Periods (S1, S2)</h3>
+          <hr />
+          <div className={styles.divperiod}>
+          {["semestre1", "semestre2"].map((semestre, index) => (
+            <div key={index} className={styles.period}>
+              <h2>{`Semester ${index + 1}:`}</h2>
+
+              <label >start:</label>
+              <input
+                type="date"
+                value={academicPeriods[semestre].start}
+                onChange={(e) => handleInputChange(semestre, "start", e.target.value)}
+              />
+                    <label >end:</label>
+              <input
+                type="date"
+                value={academicPeriods[semestre].end}
+                onChange={(e) => handleInputChange(semestre, "end", e.target.value)}
+              />
+            </div>
+            
+          ))}
+          <button className={styles.savebtn2} onClick={handleSave}>Save Changes</button>
+          </div>
+         </section>
+
+
+
+         <section className={styles.card}>
+          <h3>Academic Periods (P1, P2, P3)</h3>
+          <hr />
+          <div className={styles.divperiod}>
+          {[1, 2, 3].map((num) => (
+            <div key={num} className={styles.period}>
+               
+              <h2>Period {num}:</h2>
+
+              <label >start:</label>
+              <input
+                type="date"
+                value={academicPeriods[`periode${num}`].start}
+                onChange={(e) => handleInputChange(`periode${num}`, "start", e.target.value)}
+              />
+               <label >end:</label>
+
+              <input
+                type="date"
+                value={academicPeriods[`periode${num}`].start}
+                onChange={(e) => handleInputChange(`periode${num}`, "end", e.target.value)}
+              />
+              
+            </div>
+           
+
+          ))}
+          
+          <button className={styles.savebtn2} onClick={handleSave}>Save Changes</button>
+        </div>
+        </section>
+        
+
+
+
+
+
         <section className={styles.card}>
           <h3>University Vacations</h3>
           <hr />
