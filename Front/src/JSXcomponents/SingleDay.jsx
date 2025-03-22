@@ -35,7 +35,7 @@ function toggleAbsent (startTime) {
  async function handleChanges(){
 
 try{
-  await axios.post('',{teacher: teacher, day: day, absentSessions:absentSession})
+  await axios.post('',{teacher: teacher.teacher_id, day: day, absentSessions:absentSession})
   console.log("absent sessions sent correctly")
 }  
 catch(error){

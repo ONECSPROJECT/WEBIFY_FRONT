@@ -9,7 +9,7 @@ const [bankAccount,setbankAccount]=useState("");
 const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("", {fullname,state,grade,bankAccount});
+      const response = await axios.post("http://localhost:300/api/user/register", {fullname,state,grade,bankAccount});
     } catch (error) {
       
       alert("Failed to add teacher.");

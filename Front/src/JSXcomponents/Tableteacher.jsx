@@ -1,18 +1,19 @@
 import { useState } from "react";
-import styles from "../CSS/Tableteacher.module.css";
+import "../CSS/Tableteacher.css";
 import { FaSearch } from "react-icons/fa";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 
 function Tableteacher() {
-  const [fullname, setfullname] = useState("");
+  const [first_name, setfirstname] = useState("");
+  const [last_name, setlastname] = useState("");
   const [email, setemail] = useState("");
-  const [ccp, setccp] = useState("");
+  const [payment_information, setccp] = useState("");
   const [password, setpassword] = useState("");
-  const [state, setstate] = useState("");
+  const [state, setstate] = useState("Intérieur");
   const [grade, setgrade] = useState("");
-
+  const [faculty, setfaculty]=useState("esi-sba")
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [search, setSearch] = useState("");
@@ -90,8 +91,8 @@ function Tableteacher() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://your-backend-api.com/teachers", { fullname, email, password, ccp, grade, state });
-      alert("Teacher added successfully!");
+      await axios.post("http://localhost:3000/api/user/register", {first_name, last_name, state, payment_information, faculty, email, password, role:"teacher" });
+      alert("Teacher added successfully!"); 
       // fetchTeachers();
     } catch (error) {
       alert("Failed to add teacher.");
@@ -103,52 +104,54 @@ function Tableteacher() {
   );
 
   return (
-    <div className={styles.content}>
+    <div className="content">
       <h1>Manage Teachers</h1>
-      <div className={styles.inbo}>
-        <div className={styles.searchbar}>
+      <div className="inbo">
+        <div className="searchbar">
           <input
             type="text"
             placeholder="Search for a teacher..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <FaSearch className={styles.icons} />
+          <FaSearch className="icons" />
         </div>
-        <button className={styles.addteacher} onClick={() => setShowModal(true)}>
+        <button className="add-teacher" onClick={() => setShowModal(true)}>
           + Add Teacher
         </button>
       </div>
 
       {showModal && (
-        <div className={styles.modaloverlay}>
-          <div className={styles.modal}>
-            <div className={styles.anh}>
+        <div className="modal-overlay">
+          <div className="modal">
+            <div className="anh">
               <h2>Add Teacher</h2>
-              <AiOutlineClose className={styles.closeicon} onClick={() => setShowModal(false)} />
+              <AiOutlineClose className="close-icon" onClick={() => setShowModal(false)} />
             </div>
             <form onSubmit={handleSubmit}>
-              <label >Full name</label>
-              <input  className={styles.inputad}type="text" value={fullname} onChange={(e) => setfullname(e.target.value)} />
+              <label>First name</label>
+              <input type="text" value={first_name} onChange={(e) => setfirstname(e.target.value)} />
+              <label>Last name</label>
+              <input type="text" value={last_name} onChange={(e) => setlastname(e.target.value)} />
               <label>Email</label>
-              <input  className={styles.inputad} type="email" value={email} onChange={(e) => setemail(e.target.value)} />
+              <input type="email" value={email} onChange={(e) => setemail(e.target.value)} />
               <label>Password</label>
-              <input className={styles.inputad} type="password" value={password} onChange={(e) => setpassword(e.target.value)} />
+              <input type="password" value={password} onChange={(e) => setpassword(e.target.value)} />
               <label>CCP</label>
-              <input type="text"  className={styles.inputad} value={ccp} onChange={(e) => setccp(e.target.value)} />
+              <input type="text" value={payment_information} onChange={(e) => setccp(e.target.value)} />
               <label>Grade</label>
-              <input  className={styles.inputad} type="text" value={grade} onChange={(e) => setgrade(e.target.value)} />
+              <input type="text" value={grade} onChange={(e) => setgrade(e.target.value)} />
               <label>State</label>
-              <select className={styles.inputad}  value={state} onChange={(e) => setstate(e.target.value)}>
-                <option value="Intérieur">Intérieur</option>
-                <option value="Exterieur">Exterieur</option>
+              <select value={state} onChange={(e) => setstate(e.target.value)}>
+                <option value="Intérieur" onSelect={()=>setfaculty("esi-sba")}>Intérieur</option>
+                <option value="Exterieur" onSelect={()=>setfaculty("uni-sba")}>Exterieur</option>
               </select>
-              <div className={styles.btnddiv}>
-                <div className={styles.modalbuttons}>
-                  <button type="submit" className={styles.submitbtn}>
+              <div className="btnddiv">
+                <div className="modal-buttons">
+                  <button type="submit" className="submit-btn">
                     Add
                   </button>
-                  <button type="button" onClick={() => setShowModal(false)} className={styles.closebtn}>
+                  <button type="button" onClick={() => setShowModal(false)} className="close-btn">
                     Cancel
                   </button>
                 </div>
@@ -159,21 +162,21 @@ function Tableteacher() {
       )}
 
       {showDeleteModal && (
-        <div className={styles.modaldelete}>
-          <div className={styles.modaldeletecontent}>
-          <div className={styles.anh}>
+        <div className="modaldelete">
+          <div className="modaldelete-content">
+          <div className="anh">
             <h3>Remove {selectedTeacher?.fullName}?</h3>
-            <AiOutlineClose className={styles.closeicon} onClick={() => setShowDeleteModal(false)} />
+            <AiOutlineClose className="close-icon" onClick={() => setShowDeleteModal(false)} />
            </div>
           <hr />
             <h6>
               Are you sure you want to remove <strong>{selectedTeacher?.fullName}</strong>? This action cannot be undone.
             </h6>
-            <div className={styles.btnddiv}>
-            <button className={styles.cancel} onClick={() => setShowDeleteModal(false)}>
+            <div className="btnddiv">
+            <button className="cancel" onClick={() => setShowDeleteModal(false)}>
               Cancel
             </button>
-            <button className={styles.confirm} onClick={confirmDelete}>
+            <button className="confirm" onClick={confirmDelete}>
               Confirm
             </button>
             </div>
@@ -181,12 +184,12 @@ function Tableteacher() {
         </div>
       )}
       {showEditModal && selectedTeacher && (
-        <div className={styles.modaloverlay}>
-          <div className={styles.modaledit}>
-            <div className={styles.modalheader}>
-              <div className={styles.anh}>
+        <div className="modal-overlay">
+          <div className="modaledit">
+            <div className="modal-header">
+              <div className="anh">
               <h2>Edit Teacher</h2>
-              <AiOutlineClose className={styles.closeicon} onClick={() => setShowEditModal(false)} />
+              <AiOutlineClose className="close-icon" onClick={() => setShowEditModal(false)} />
             </div>
             </div>
             <form>
@@ -207,9 +210,9 @@ function Tableteacher() {
                 <option value="Exterieur">Exterieur</option>
               </select>
 
-              <div className={styles.btnddiv}>
-                <button type="button" className={styles.closebtn} onClick={() => setShowEditModal(false)}>Cancel</button>
-                <button type="button"className={styles.submitedbtn} onClick={handleSave}>Save</button>
+              <div className="btnddiv">
+                <button type="button" className="close-btn" onClick={() => setShowEditModal(false)}>Cancel</button>
+                <button type="button"className="submited-btn" onClick={handleSave}>Save</button>
               </div>
             </form>
           </div>
@@ -236,10 +239,10 @@ function Tableteacher() {
               <td>{teacher.ccp}</td>
               <td>{teacher.state}</td>
               <td>
-                <button className={styles.edit} onClick={() => handleEditClick(teacher)}>
+                <button className="edit" onClick={() => handleEditClick(teacher)}>
                   <FaEdit />
                 </button>
-                <button className={styles.delete} onClick={() => handleDeleteClick(teacher)}>
+                <button className="delete" onClick={() => handleDeleteClick(teacher)}>
                   <FaTrash />
                 </button>
               </td>

@@ -1,9 +1,10 @@
 import { useRef, useState,useEffect } from "react";
-import { useNavigate,useParams } from "react-router-dom";
+import { useNavigate,useSearchParams } from "react-router-dom";
 import axios from "axios";
 import styles from '../CSS/ResetPass.module.css'
 function ResetPass(){
-    const {token} = useParams();
+    const [searchParams] = useSearchParams();
+    const token = searchParams.get("token");
     const[password, setPassword]= useState('');
     const[newPassword, setNewPassword]=useState('')
     const [match, setMatch]=useState('')
@@ -42,20 +43,16 @@ function ResetPass(){
 
 
 
-    async function handleR(e) {
-        e.preventDefault();
-        try{
-             await axios.post('${token}', {password}); /*sent token here*/
-            setResponse("Password resetted!")
-            navigate('./Redirect')
+        async function handleR(e) {
+            e.preventDefault();
+            try {
+                await axios.post("http://localhost:3000/api/user/reset-password", {token,newPassword});
+                setResponse("Password reset successfully!");
+                navigate('/Redirect');
+            } catch (error) {
+                setResponse("Error, please retry.");
+            }
         }
-        catch(error){
-            setResponse("error, retry")
-        }
-
-    
-
-    }
 
     return(
         <div className={styles.ResetPassword_container}>
