@@ -9,12 +9,12 @@ function GlobalTimeTable() {
   const [schedule, setSchedule] = useState({
     Sunday: [], Monday: [], Tuesday: [], Wednesday: [], Thursday: []
   });
-  const [newSession, setNewSession] = useState({day_of_week: "Sunday",start_time: "08:00:00",duration_minutes: "120",session_type: "Course",promotion: "",section: "",group: "",teacher: "",salle: ""});
+  const [newSession, setNewSession] = useState({day_of_week: "Sunday",start_time: "08:00:00",duration_minutes: "120",session_type: "Course",promotion: "",speciality:"", teacher: ""});
   const [teachers, setTeachers] = useState([]);
-  const [salles, setSalles] = useState([]);
   const [promotions, setPromotions] = useState([]);
-  const [sections, setSections] = useState([]);
-  const [groups, setGroups] = useState([]);
+  const [specialities, setSpecialities] = useState([])
+  const [sessions,setSessions]=useState([])
+  const [specName,setSpecName]=useState(null);
   const [selectedSession, setSelectedSession] = useState(null);
   const [editmodal, seteditModal]=useState(false);
   const [deletemodal, setdeletemodal]=useState(false);
@@ -49,27 +49,7 @@ function GlobalTimeTable() {
         );
         return updatedSchedule
     });
-    const { day_of_week, start_time, duration_minutes, session_type, promotion, section, group, teacher, salle } = selectedSession;
-    let sectionName= "All"
-    let groupName ="All"
-
-    axios.get(`http://localhost:3000/api/user/fetch-section-name?sectionID=${section}`)
-        .then(sectionRes => {
-            sectionName = sectionRes.data.name || "All";
-            return axios.get(`http://localhost:3000/api/user/fetch-group-name?groupID=${group}`);
-        })
-        .then(groupRes => {
-            groupName = groupRes.data.name || "All";
-            setSchedule(prev => ({
-                ...prev,
-                [day_of_week]: [
-                    ...prev[day_of_week],
-                    {start_time,duration_minutes: Number(duration_minutes),session_type,promotion,section: sectionName,group: groupName,teacher,salle}]}))
-        })
-        .catch(err =>console.error("Error fetching section or group name:", err));
-
-
-
+   
 
 
     seteditModal(false)
@@ -79,11 +59,8 @@ function GlobalTimeTable() {
   
 
   function handleEditClick(session,day) {
-    seteditModal(true);
-    
-    setSelectedSession({...session, originalDay: day,originalSession: session 
-    })
-  
+    seteditModal(true)
+    setSelectedSession({...session, originalDay: day,originalSession: session })
     console.log("editing session:",session)
   }
 
@@ -94,8 +71,7 @@ function GlobalTimeTable() {
   const { name, value } = e.target;
   setSelectedSession(prevSession => ({
     ...prevSession,
-    [name]: value
-  }));
+    [name]: value }))
   console.log("Updated Session:", selectedSession)
 
 }
@@ -112,63 +88,52 @@ function GlobalTimeTable() {
   
   
   useEffect(()=>{
-    axios.get("http://localhost:3000/api/user/fetch-teachers").then(res => setTeachers(res.data));
-    axios.get("http://localhost:3000/api/user/fetch-salles").then(res => setSalles(res.data))
-    axios.get("http://localhost:3000/api/user/fetch-promotions").then(res => setPromotions(res.data))
+    axios.get("http://localhost:3000/api/user/fetch-teachers").then(res=>setTeachers(res.data));
+    axios.get("http://localhost:3000/api/user/fetch-promotions").then(res=>setPromotions(res.data))
+    axios.get("http://localhost:3000/api/user/fetch-sessions").then(res =>setSessions(res.data))
+
   },[]);
+  
+
+
   const handlePromotionChange =(e)=>{
 
 
-
     const selectedPromotion = e.target.value;
-    setNewSession({ ...newSession, promotion: selectedPromotion, section: "", group: "" });
+    setNewSession({ ...newSession, promotion: selectedPromotion, speciality: "" });
     if (selectedPromotion) {
-      axios.get(`http://localhost:3000/api/user/fetch-sections?promotion=${selectedPromotion}`)
-        .then(res =>setSections(res.data))
+      axios.get(`http://localhost:3000/api/user/fetch-speciality?promotion=${selectedPromotion}`)
+        .then(res =>setSpecialities(res.data))
         .catch(err=> console.error(err));
     }else {
-      setSections([]);
-      setGroups([]);}
+      setSpecialities([])}
+  }
+
+
+  const handleSpecialityChange = async(e) =>{
+    const selectedSpec=e.target.value
+    setNewSession(prev => ({ ...prev,speciality:selectedSpec}))
+if (selectedSpec){
+  try{
+    const response= await axios.get(`http://localhost:3000/api/user/fetch-speciality-name?specialityid=${selectedSpec}`)
+    setSpecName(response.data.name)
+    console.log(specName)
+  }
+  catch(error){
+    console.log("error fetching the spec name")
+  }
+}
   };
-  const handleSectionChange = (e) => {
-    const selectedSection = e.target.value;
-    setNewSession({ ...newSession, section:selectedSection, group: "" });
-  
-    if (selectedSection){
-      axios.get(`http://localhost:3000/api/user/fetch-groups?section=${selectedSection}`)
-        .then(res => setGroups(res.data))
-        .catch(err => console.error(err));} 
-      
-
-        
-    else {
-      alert("crash")
-      setGroups([])}
-  };
-
-
-  
 
 
   function handleAddSession(){
-    const { day_of_week, start_time, duration_minutes, session_type, promotion, section, group, teacher, salle } = newSession;
+    const { day_of_week, start_time, duration_minutes, session_type, promotion,speciality, teacher} = newSession;
 
-    axios.get(`http://localhost:3000/api/user/fetch-section-name?sectionID=${section}`)
-      .then(res => {
-              console.log("Received section name", res.data)
-
-        const sectionName = res.data.name|| "All" 
-  
-        // Fetch group name
-        axios.get(`http://localhost:3000/api/user/fetch-group-name?groupID=${group}`)
-          .then(groupRes => {
-            const groupName = groupRes.data.name ||"All"
+ 
             setSchedule(prev => ({...prev, [day_of_week]:[
-                ...prev[day_of_week],{ start_time, duration_minutes: Number(duration_minutes), session_type, promotion, section: sectionName, group: groupName,      teacher,salle}] }));
-          })
-          .catch(err => console.error("checkpoint error:", err))
-      })
-      .catch(err => console.error("checkpoint eroor:", err))
+                ...prev[day_of_week],{ start_time, duration_minutes: Number(duration_minutes), session_type, promotion, speciality:specName,teacher,}] }))
+                setSpecName("")
+    
   }
   
       
@@ -221,10 +186,9 @@ function GlobalTimeTable() {
         </div>
 
         <div>
+
   <label>Promotion:</label>
-  <select name="promotion" value={selectedSession.promotion} onChange={(e)=>{handlePromotionChange(e);
-    handleInputChange(e);
-  }}>
+  <select name="promotion" value={selectedSession.promotion} onChange={(e)=>{handleInputChange(e)}}>
     <option value="">Select</option>
     {promotions.map(promo => (
       <option key={promo.name} value={promo.name}>{promo.name}</option>
@@ -232,31 +196,8 @@ function GlobalTimeTable() {
   </select>
 </div>
 
-{selectedSession.promotion && (
-  <div>
-    <label>Section:</label>
-    <select name="section" value={selectedSession.section} onChange={(e)=> {    handleSectionChange(e)
-handleInputChange(e);
-    }}>
-      <option value="">Select</option>
-      {sections.map(sec =>(
-        <option key={sec.sectionID} value={sec.sectionID}>{sec.name}</option>
-      ))}
-    </select>
-  </div>
-)}
 
-{selectedSession.section && (
-  <div>
-    <label>Group:</label>
-    <select name="group" value={selectedSession.group} onChange={handleInputChange}>
-      <option value="">Select</option>
-      {groups.map(group => (
-        <option key={group.groupID} value={group.groupID}>{group.name}</option>
-      ))}
-    </select>
-  </div>
-)}
+
 
 
         {/* Teacher Selection */}
@@ -272,16 +213,7 @@ handleInputChange(e);
           </select>
         </div>
 
-        {/* Salle Selection */}
-        <div>
-          <label>Salle:</label>
-          <select name="salle" value={selectedSession.salle} onChange={handleInputChange}>
-            <option value="">Select</option>
-            {salles.map(salle => (
-              <option key={salle.salleID} value={salle.salleID}>{salle.name}</option>
-            ))}
-          </select>
-        </div>
+        
 
 
         <div className="btnddiv">
@@ -346,48 +278,49 @@ handleInputChange(e);
           <input type="text" value={newSession.duration_minutes} onChange={e => setNewSession({ ...newSession, duration_minutes: e.target.value })} />
         </div>
 
+        {/*session type selection*/}
         <div>
           <label>Type of session:</label>
-          <select value={newSession.session_type} onChange={e => setNewSession({ ...newSession, session_type: e.target.value })}>
-            <option value="Course">Course</option>
-            <option value="TD">TD</option>
-            <option value="TP">TP</option>
+          <select required value={newSession.session_type} onChange={e=> {
+    setNewSession({ ...newSession, session_type: e.target.value })}}>
+            <option value="">Select</option>
+            {sessions.map(session => (
+              <option key={session.session_type_id} value={session.name}>
+               {session.name}
+              </option>))}
           </select>
         </div>
 
-        <div>
-  <label>Promotion:</label>
-  <select value={newSession.promotion} onChange={handlePromotionChange}>
-    <option value="">Select</option>
-    {promotions.map(promo => (
-      <option key={promo.name} value={promo.name}>{promo.name}</option>
-    ))}
-  </select>
-</div>
+  
 
-{newSession.promotion && (
+  {/*Promotion selection*/}
   <div>
-    <label>Section:</label>
-    <select value={newSession.section} onChange={handleSectionChange}>
-      <option value="">Select</option>
-      {sections.map(sec =>(
-        <option key={sec.sectionID} value={sec.sectionID}>{sec.name}</option>
-      ))}
-    </select>
+  <label>Promotion</label>
+  <select required value={newSession.promotion} onChange={e => {handlePromotionChange(e)
+    setNewSession({ ...newSession, promotion: e.target.value })}}>
+            <option value="">Select</option>
+            {promotions.map(promotion => (
+              <option key={promotion.promoid} value={promotion.promoid}>
+               {promotion.name}
+              </option>
+            ))}
+          </select>
   </div>
-)}
 
-{newSession.section && (
-  <div>
-    <label>Group:</label>
-    <select value={newSession.group} onChange={e => setNewSession({ ...newSession, group: e.target.value })}>
-      <option value="">Select</option>
-      {groups.map(group => (
-        <option key={group.groupID}  value={group.groupID}>{group.name}</option>
-      ))}
-    </select>
+    {/*Speciality selection*/}
+    <div>
+  <label>Speciality</label>
+  <select  value={newSession.speciality} onChange={handleSpecialityChange}>
+            <option value="">Select</option>
+            {specialities.map(speciality => (
+              <option key={speciality.specialityid} value={speciality.specialityid}>
+               {speciality.name}
+              </option>
+            ))}
+          </select>
   </div>
-)}
+
+
 
 
         {/* Teacher Selection */}
@@ -403,16 +336,6 @@ handleInputChange(e);
           </select>
         </div>
 
-        {/* Salle Selection */}
-        <div>
-          <label>Salle:</label>
-          <select value={newSession.salle} onChange={e => setNewSession({ ...newSession, salle: e.target.value })}>
-            <option value="">Select</option>
-            {salles.map(salle => (
-              <option key={salle.salleID} value={salle.salleID}>{salle.name}</option>
-            ))}
-          </select>
-        </div>
         <button onClick={handleAddSession}>Add Session</button>
         <table border="1">
           <thead>
@@ -422,10 +345,8 @@ handleInputChange(e);
               <th>Duration</th>
               <th>Session Type</th>
               <th>Promotion</th>
-              <th>Section</th>
-              <th>Group</th>
+              <th>Speciality</th>
               <th>Teacher</th>
-              <th>Salle</th>
               <th>Actions</th>
             </tr>
           </thead>
@@ -438,10 +359,8 @@ handleInputChange(e);
                   <td>{s.duration_minutes} min</td>
                   <td>{s.session_type}</td>
                   <td>{s.promotion}</td>
-                  <td>{s.section||"All"}</td>
-                  <td>{s.group||"All"}</td>
+                  <td>{s.speciality ||"Null"}</td>
                   <td>{s.teacher||"Not selected"}</td>
-                  <td>{s.salle||"Not selected"}</td>
                   <td>
                                   <button className="edit" onClick={() => handleEditClick(s, day)}>
                                     <FaEdit />
