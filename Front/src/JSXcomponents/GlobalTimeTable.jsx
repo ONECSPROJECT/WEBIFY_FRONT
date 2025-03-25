@@ -30,14 +30,15 @@ const [showdeleteModal, setshowDeleteModal]=useState(false)
 function handleDelete(timetable) {
   setdeletingtimetable(timetable);
     setTimetables((prev)=>prev.filter((item)=>item.id!==timetable.id))
+    setshowDeleteModal(false)
 }
 
-  const handleClick = () => {
+  const handleClick =() =>{
     fileInputRef.current.click()
   }
   const handleFileChange =(event)=>{
     if (event.target.files.length >0){
-      const uploadedFile = event.target.files[0];
+      const uploadedFile = event.target.files[0]
       setFileName(uploadedFile.name) 
       setFile(uploadedFile)
       setFileURL(URL.createObjectURL(uploadedFile))
@@ -53,7 +54,7 @@ function handleDelete(timetable) {
       link.click()
       document.body.removeChild(link);
     }
-  };
+  }
   useEffect(() => {
     setIsEmpty(timetables.length=== 0)
   }, [timetables]);
@@ -62,15 +63,13 @@ function handleDelete(timetable) {
     setTimetables((prev) => {
       const updatedTimetables = [
         ...prev,
-        { id: Date.now(), promo, semester, section, fileName }
-      ];
-      setShowAddmodal(false);
-      setPromo("1CPI");
-      setSemester("Semester 1");
-      setSection("1");
-      setFileName("");
+        { id: Date.now(),promo, semester, section, fileName}
+      ]
+      setShowAddmodal(false)
+      setSemester("Semester 1")
+      setFileName("")
       setshowEditModal(false);
-      return updatedTimetables;
+      return updatedTimetables
     });
   }
   
@@ -80,10 +79,9 @@ function handleDelete(timetable) {
     e.preventDefault()
   
     if (!editingTimetable) return;
-  
     setTimetables(prev=>
       prev.map(item =>
-        item.id===editingTimetable.id?{ ...item, promo, semester, section, fileName }:item))
+        item.id===editingTimetable.id?{ ...item, promo, semester, section, fileName}:item))
     setEditingTimetable(null)
     setPromo("")
     setSemester("")
@@ -125,17 +123,7 @@ function handleDelete(timetable) {
 
             <h2>Upload a new TimeTable</h2>
             <form onSubmit={addTimeTable} action="">
-            <div className={styles.promotions} >
-              <label htmlFor="">Academic year</label> <br />
-              <select name="promo" onChange={(e) => setPromo(e.target.value)} >
-  <option value="1CPI">1CPI</option>
-  <option value="2CPI">2CPI</option>
-  <option value="1CS">1CS</option>
-  <option value="2CS">2CS</option>
-  <option value="3CS">3CS</option>
-</select>
 
-            </div>
             <div className={styles.semesters}>
               <label htmlFor="">Semester</label> <br />
               <select name="" id="" onChange={(e)=>setSemester(e.target.value)} >select
@@ -143,10 +131,7 @@ function handleDelete(timetable) {
                 <option value="Semester 2">Semester 2</option>
               </select>
             </div>
-            <div className={styles.sections}>
-              <label htmlFor="">Number of sections</label> <br />
-              <input required onChange={(e)=>setSection(e.target.value)} type="number"   />
-            </div>
+
       <div className={styles.upload}>
         <label htmlFor="">Upload a time table</label> <br /> <br />
       <div className={styles.uploadBox} onClick={handleClick}>
@@ -177,17 +162,7 @@ function handleDelete(timetable) {
 
             <h2>Edit the  TimeTable</h2>
             <form onSubmit={editTimeTable} action="">
-            <div className={styles.promotions} >
-              <label htmlFor="">Academic year</label> <br />
-              <select name="promo" value={promo} onChange={(e) => setPromo(e.target.value)} >
-  <option value="1CPI">1CPI</option>
-  <option value="2CPI">2CPI</option>
-  <option value="1CS">1CS</option>
-  <option value="2CS">2CS</option>
-  <option value="3CS">3CS</option>
-</select>
-
-            </div>
+    
             <div className={styles.semesters}>
               <label htmlFor="">Semester</label> <br />
               <select value={semester} name="" id="" onChange={(e)=>setSemester(e.target.value)} >select
@@ -195,10 +170,7 @@ function handleDelete(timetable) {
                 <option value="Semester 2">Semester 2</option>
               </select>
             </div>
-            <div className={styles.sections}>
-              <label htmlFor="">Number of sections</label> <br />
-              <input value={section} onChange={(e)=>setSection(e.target.value)} type="number"  />
-            </div>
+          
       <div className={styles.upload}>
         <label htmlFor="">Upload a time table</label> <br /> <br />
       <div className={styles.uploadBox} onClick={handleClick}>
@@ -222,10 +194,19 @@ function handleDelete(timetable) {
       {showdeleteModal&&(
         <div className={styles.deletecontainer}>
           <div className={styles.box}>
+          <div className={styles.line}>
+          <h2>Confirm Deletion</h2>
           <div onClick={()=> setshowDeleteModal(false)} className={styles.closeicon}>
           <IoCloseSharp />
           </div>
-          <p>Are you sure you want to delete this, bitch?</p>
+          </div>
+
+          <p>Are you sure you want to delete this timetable?</p>
+          <br />
+          <div className={styles.buttondeletediv}>
+            <button onClick={()=>setshowDeleteModal(false)} className={styles.canceldelete}>Cancel</button>
+            <button onClick={()=>handleDelete(deletingtimetable)} className={styles.confirmdelete}>Confirm</button>
+          </div>
           </div>
         </div>
       )}
@@ -248,8 +229,7 @@ function handleDelete(timetable) {
     {timetables.map((timetable)=>(
     
         <li key={timetable.id}>
-        <p><strong>{timetable.promo} - {timetable.semester}</strong></p>
-        <p>Sections: {timetable.section}</p>
+        <p><strong>{timetable.semester || "Semester 1"}</strong></p>
         <p>File: {timetable.fileName}</p>
         <div className={styles.buttons}>
           <button className={styles.editbutton} onClick={() => {
@@ -258,8 +238,10 @@ function handleDelete(timetable) {
             <div><FaRegEdit/></div>Edit
           </button>
 
-          <button className={styles.deletebutton} onClick={() => handleDelete(timetable)}>
-            <div><MdDelete /></div><span>Delete</span>
+          <button className={styles.deletebutton} onClick={()=>{setshowDeleteModal(true);
+            setdeletingtimetable(timetable)
+          }}>
+            <div ><MdDelete /></div><span>Delete</span>
           </button>
 
           <button className={styles.downloadbutton} onClick={handleDownload}>
