@@ -114,7 +114,14 @@
     border-radius: 5px;
     cursor: pointer;
   }
-  
+  .close_icon{
+    transform: scale(2);
+  }
+  .close_icon:hover{
+    transform: scale(2.1);
+    color: red;
+    cursor: pointer;
+  }
   .submitbtn {
     background-color: #2DD4BF;
     color: #FFFFFF;
@@ -157,4 +164,9 @@
     padding-top:20px ;
     padding-bottom: 30px;
     
+  }
+
+
+  .editForm select, .editForm input{
+    padding: 17px;
   }

@@ -6,16 +6,22 @@ import { FaSearch } from "react-icons/fa";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 function GlobalTimeTable() {
-  const [schedule, setSchedule] = useState({
-    Sunday: [], Monday: [], Tuesday: [], Wednesday: [], Thursday: []
-  });
+  const [weekDays, setWeekDays] = useState([ 
+    {id: 1,name: "Sunday" },
+    {id: 2, name:"Monday" },
+    {id:3,name:"Tuesday" },
+    { id: 4,name:"Wednesday" },
+    {id:5, name: "Thursday" }])
+
+    const[counter, setCounter]=useState(0)
+  const [schedule, setSchedule] = useState({Sunday:[], Monday: [], Tuesday:[], Wednesday:[], Thursday: []})
   const [newSession, setNewSession] = useState({day_of_week: "Sunday",start_time: "08:00:00",duration_minutes: "120",session_type: "Course",promotion: "",speciality:"", teacher: ""});
   const [teachers, setTeachers] = useState([]);
   const [promotions, setPromotions] = useState([]);
   const [specialities, setSpecialities] = useState([])
   const [sessions,setSessions]=useState([])
   const [specName,setSpecName]=useState(null);
-  const [selectedSession, setSelectedSession] = useState(null);
+  const [selectedSession, setSelectedSession] = useState(null)
   const [editmodal, seteditModal]=useState(false);
   const [deletemodal, setdeletemodal]=useState(false);
 
@@ -42,33 +48,39 @@ function GlobalTimeTable() {
   
   function handleEdit() {
     if (!selectedSession) return;
+  
     setSchedule(prevSchedule => {
-        const updatedSchedule = { ...prevSchedule };
-        updatedSchedule[selectedSession.originalDay] = updatedSchedule[selectedSession.originalDay].filter(
-            session =>session!==selectedSession.originalSession
-        );
-        return updatedSchedule
-    });
-   
-
-
+      const updatedSchedule = { ...prevSchedule };
+      const newDay = selectedSession.day_of_week ||selectedSession.originalDay; //there's always a valid day
+        updatedSchedule[selectedSession.originalDay]= updatedSchedule[selectedSession.originalDay].filter(
+        session =>session!==selectedSession.originalSession
+      )
+      if (newDay!== selectedSession.originalDay){
+        updatedSchedule[newDay] =updatedSchedule[newDay]?.filter(
+          session=> session !==selectedSession.originalSession)||[]
+      }
+      updatedSchedule[newDay].push({ ...selectedSession })
+      return updatedSchedule
+    })
     seteditModal(false)
-}
+  }
+  
 
 
   
 
   function handleEditClick(session,day) {
     seteditModal(true)
-    setSelectedSession({...session, originalDay: day,originalSession: session })
+    setSelectedSession({...session, originalDay: day,originalSession: session, day_of_week: session.day_of_week || day })
     console.log("editing session:",session)
+
   }
 
 
   
 
  function handleInputChange(e) {
-  const { name, value } = e.target;
+  const { name, value } = e.target
   setSelectedSession(prevSession => ({
     ...prevSession,
     [name]: value }))
@@ -77,16 +89,6 @@ function GlobalTimeTable() {
 }
 
 
-
-
-
-
-
-
-
- 
-  
-  
   useEffect(()=>{
     axios.get("http://localhost:3000/api/user/fetch-teachers").then(res=>setTeachers(res.data));
     axios.get("http://localhost:3000/api/user/fetch-promotions").then(res=>setPromotions(res.data))
@@ -97,7 +99,6 @@ function GlobalTimeTable() {
 
 
   const handlePromotionChange =(e)=>{
-
 
     const selectedPromotion = e.target.value;
     setNewSession({ ...newSession, promotion: selectedPromotion, speciality: "" });
@@ -136,6 +137,36 @@ if (selectedSpec){
     
   }
   
+
+function handleSaveSchedule() {
+  setCounter(prev=>prev+1);
+  if (!schedule||!weekDays.length){
+    console.error(weekDays.length)
+    return;
+  }
+  const formattedSchedule = Object.entries(schedule).flatMap(([dayName, sessions,])=>{
+    const dayObject= weekDays.find(day => day.name === dayName)
+    const dayId =dayObject? dayObject.id: null
+    if (!dayId){
+      console.error(`No ID found for day: ${dayName}`)
+      return[]
+    }
+
+    return sessions.map(session => ({...session,day_id: dayId,day_of_week: dayName}))})
+
+  console.log("Final formatted schedule",typeof formattedSchedule)
+
+
+
+   axios.post("http://localhost:3000/api/user/save-schedule", {schedule: formattedSchedule, period: counter })
+     .then(response => {
+       console.log("Successfully saved schedule!", response.data);
+     })
+     .catch(error => {
+       console.error("Error saving schedule:", error)
+     });
+}
+
       
       
   return (
@@ -154,10 +185,10 @@ if (selectedSpec){
             <div className="modal-header">
               <div className="anh">
               <h2>Edit Session</h2>
-              <AiOutlineClose className="close-icon" onClick={() => seteditModal(false)} />
+              <AiOutlineClose className={styles.close_icon} onClick={() => seteditModal(false)} />
             </div>
             </div>
-            <form>
+            <form className={styles.editForm}>
            
              <div>
           <label>Day:</label>
@@ -178,10 +209,12 @@ if (selectedSpec){
 
         <div>
           <label>Type of session:</label>
-          <select name="session_type" value={selectedSession.session_type} onChange={handleInputChange}>
-            <option value="Course">Course</option>
-            <option value="TD">TD</option>
-            <option value="TP">TP</option>
+          <select name="session_type" required value={selectedSession.session_type} onChange={handleInputChange}>
+            <option value="">Select</option>
+            {sessions.map(session => (
+              <option key={session.session_type_id} value={session.name}>
+               {session.name}
+              </option>))}
           </select>
         </div>
 
@@ -196,6 +229,21 @@ if (selectedSpec){
   </select>
 </div>
 
+
+<div>
+  <label>Speciality</label>
+  <select name="speciality"  value={selectedSession.speciality} onChange={(e)=>{
+    handleSpecialityChange(e)
+    handleInputChange(e)
+  }}>
+            <option value="">Select</option>
+            {specialities.map(speciality => (
+              <option key={speciality.specialityid} value={speciality.specialityid}>
+               {speciality.name}
+              </option>
+            ))}
+          </select>
+  </div>
 
 
 
@@ -248,14 +296,6 @@ if (selectedSpec){
           </div>
         </div>
       )}
-
-
-
-
-
-
-
-
 
 
 
@@ -375,8 +415,8 @@ if (selectedSpec){
           </tbody>
         </table>
 
-        <button>Save Changes</button>
-      </div>
+        <button onClick={handleSaveSchedule}>Save Changes</button>
+        </div>
     </>
   )
 }
