@@ -4,14 +4,16 @@ import axios from "axios";
 import { FaTrash } from "react-icons/fa";
 
 function Settingscomp() {
-  const [name, setName] = useState("Admin Name");
-  const [email, setEmail] = useState("admin@example.com");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     fetchVacationsAndExams();
+    fetchAdminName()
+    fetchAdminEmail()
   }, []);
 
   const fetchVacationsAndExams = async () => {
@@ -24,6 +26,15 @@ function Settingscomp() {
     }
   };
 
+  function fetchAdminName(){
+  axios.get("http://localhost:3000/api/user/fetch-admin-name").then(res=>{setName(res.data.full_name)
+    console.log(res.data.full_name)
+  })
+  }
+
+  function fetchAdminEmail(){
+    axios.get("http://localhost:3000/api/user/fetch-admin-email").then(res=>setEmail(res.data.email))
+  }
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {

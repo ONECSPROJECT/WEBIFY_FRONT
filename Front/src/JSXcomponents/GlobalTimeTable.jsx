@@ -24,7 +24,7 @@ const [schedules, setSchedules]=useState([])
   const [selectedSession, setSelectedSession] = useState(null)
   const [editmodal, seteditModal]=useState(false);
   const [deletemodal, setdeletemodal]=useState(false);
-  const [showScheds, setShowSheds]=useState(true)
+  const [showScheds, setShowSheds]=useState(false)
   function handleDeleteClick(session,day) {
     setdeletemodal(true)
     setSelectedSession({...session, originalDay: day, originalSession: session});
