@@ -13,6 +13,7 @@ import Tableteacher from './Tableteacher';
 import Settings from './settings';
 import Settingscomponents from './settingscomponents';
 import Settingscomp from './settingscomponents';
+import Payment from './Payement';
 
 function App() { 
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path='/table' element={<Tableteacher/>}></Route>
         <Route path='/adminpage/settings' element={<Settings/>}></Route>
         <Route path='/adminpage/comp' element={<Settingscomp/>}></Route>
+        <Route path='/adminpage/payment' element={<Payment/>}></Route>
       </Routes>
   );
 }

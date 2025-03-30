@@ -22,7 +22,7 @@ const Sidebar = () => {
           <FaChalkboardTeacher className={styles.icon} /> Manage Teachers</NavLink>
         <NavLink to="/adminpage/manage-absences" className={styles.navitem}><FaCalendarAlt className={styles.icon} /> Manage Absences</NavLink>
         <NavLink to="/adminpage/global-timetable" className={styles.navitem}><FaCalendarCheck className={styles.icon} />Global TimeTable</NavLink>
-        <NavLink to="/adminpage/payments" className={styles.navitem}>
+        <NavLink to="/adminpage/payment" className={styles.navitem}>
           <FaMoneyBill className={styles.icon} /> Payments</NavLink>
         <NavLink to="/adminpage/sup-hours-timetable" className={styles.navitem}>
           <FaClock className={styles.icon} /> Sup Hours Timetable </NavLink>
