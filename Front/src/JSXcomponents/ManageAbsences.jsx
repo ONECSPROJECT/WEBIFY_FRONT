@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import axios from "axios";
+import axios, { all } from "axios";
 import { useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 import styles from "../CSS/ManageAbsences.module.css";
@@ -22,6 +22,17 @@ function ManageAbsences() {
   const [selectedOption, setSelectedOption] = useState("singleDay");
   const [selectedTeacher, setSelectedTeacher] = useState(null); 
   const [clickedTeacher, setClickedTeacher]=useState(null)
+  //this performs when the page loads
+  const [allow,setAllow]=useState(true)
+  useEffect(()=>{
+    fetchHolidays()
+    },[date])
+
+   
+ 
+    function fetchHolidays(){
+      axios.get(`http://localhost:3000/api/user/fetch-holiday?date=${date.toISOString().split("T")[0]}`).then(res=>{res.data? setAllow(false):setAllow(true)})
+   }
 
   const formattedDate=date.toISOString().split("T")[0]
   function dateToDay(date) {
@@ -30,18 +41,60 @@ function ManageAbsences() {
   }
 
   useEffect(() => {
-    if (!selectedTeacher) {
-      console.log("Please select a teacher first");
-      setComponent(null);
-      return;
-    }
-    if(selectedOption==="singleDay"){setComponent(<SingleDay teacher={selectedTeacher} day={dateToDay(date)} date={formattedDate} onClose={()=>setComponent(null)} />);
+    if (selectedOption === "singleDay") {
+      console.log("SingleDay selected");
+  
+      if (!allow) {
+        // If it's a holiday, display the message
+        console.log("Holiday detected");
+        setComponent(<h2>Today is a holiday, nothing to display!</h2>);
+        return;
+      }
+  
+      if (!selectedTeacher) {
+        console.log("Please select a teacher first");
+        setComponent(null);
+        return;
+      }
+  
+      setComponent(
+        <SingleDay
+          teacher={selectedTeacher}
+          day={dateToDay(date)}
+          date={formattedDate}
+          onClose={() => setComponent(null)}
+        />
+      );
     } 
     
-    else{
-      setComponent(<SickLeave teacher={selectedTeacher} startDate={startDate.toISOString().split("T")[0]} endDate={endDate.toISOString().split("T")[0]} onClose={()=>setComponent(null)} />);
+    else if (selectedOption === "sickLeave") {
+      console.log("SickLeave selected");
+  
+      // SickLeave should display regardless of `allow`
+      if (!selectedTeacher) {
+        console.log("Error: No teacher selected for sick leave.");
+        setComponent(<h2>Please select a teacher first.</h2>);
+        return;
+      }
+  
+      if (!startDate || !endDate) {
+        console.log("Error: Invalid date range for sick leave.");
+        setComponent(<h2>Invalid date selection.</h2>);
+        return;
+      }
+  
+      setComponent(
+        <SickLeave
+          teacher={selectedTeacher}
+          startDate={startDate.toISOString().split("T")[0]}
+          endDate={endDate.toISOString().split("T")[0]}
+          onClose={() => setComponent(null)}
+        />
+      );
     }
-  },[selectedTeacher, selectedOption,date]);
+  }, [selectedTeacher, selectedOption, date, allow, startDate, endDate]);
+  
+  
 
   const fetchAllTeachers = async () => {
     try {
@@ -119,13 +172,13 @@ function ManageAbsences() {
   }
 
   return (
+    
     <>
     <Sidebar/>
         <div className={styles.mainContainer}>
 
           {/*TITLE*/}
           <h1>Manage Absences</h1>
-
 
       {/*OPTIONS */}
 
@@ -138,15 +191,12 @@ function ManageAbsences() {
         <input type="radio" name="opt" value="sickLeave" onChange={()=>{handleOptionChange("sickLeave")}} checked={selectedOption === "sickLeave"}/>Mark a long-term absence
       </label>
       </div>
-
-      {/*SEARCH FOR A TEACHER*/}
-      <div className={styles.row}>
+        <div className={styles.row}>
       <div className={styles.search}>
         <IoMdSearch className={styles.searchIcon}/>
         <input  type="text" onChange={(e)=>setSearch(e.target.value)} placeholder="Search for a teacher..." />
         {console.log(search)}
       </div>
-              {/* CONDITIONALLY RENDER DATE FIELD(S)*/}
               {selectedOption==="singleDay"?(
                 <div className={styles.date}>
                   <label htmlFor=""><FaCalendarDays/>Select a date &nbsp;</label>
@@ -159,7 +209,6 @@ function ManageAbsences() {
         </div>
       )}
 </div>
-      {/*CONDITIONALLY RENDER COMPONENT */}
       <div className={styles.components}>
         {component}
 
@@ -169,7 +218,6 @@ function ManageAbsences() {
     
   
 
-      {/* CALENDAR (for the test, it won't show to the admin)*/}
       <div className={styles.calendar_container}>
         <h2>School Calendar</h2>
         <Calendar onChange={setDate} value={date} />
@@ -177,7 +225,6 @@ function ManageAbsences() {
       </div> 
 
 
-      {/*TEACHERS LIST (it'll filter out the teacher as the search bar changes) */} 
       <div className={styles.teacherList}>
       <ul className={styles.teachers}>
         {teachersList.filter((teacher)=>{
@@ -193,7 +240,8 @@ function ManageAbsences() {
         ))}
       </ul>
       </div>
-    </div>
+      </div>
+   
     </>
   );
 }

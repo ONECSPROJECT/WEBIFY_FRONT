@@ -2,6 +2,12 @@
   transition: 0.1s;
 }
 
+.allow{
+  min-width: 100%;
+  height: 100vh;
+}
+
+
 .mainContainer {
   background-color: #d9d9d9;
   display: flex;

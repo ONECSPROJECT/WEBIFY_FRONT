@@ -12,6 +12,7 @@ import ManageTeachers from './ManageTeachers';
 import Tableteacher from './Tableteacher';
 import Settings from './settings'
 import Settingscomp from './settingscomponents';
+import SupTimeTables from './SupTimeTables'
 function App() { 
   return (
       <Routes>
@@ -27,6 +28,7 @@ function App() {
         <Route path='/table' element={<Tableteacher/>}></Route>
         <Route path='/adminpage/settings' element={<Settings/>}></Route>
         <Route path='/adminpage/comp' element={<Settingscomp/>}></Route>
+        <Route path='/adminpage/sup-hours-timetable' element={<SupTimeTables/>}></Route>
       </Routes>
   );
 }

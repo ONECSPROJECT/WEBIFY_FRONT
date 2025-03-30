@@ -9,7 +9,9 @@ function Settingscomp() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-
+  const [startDate, setStartDate] = useState(new Date().toISOString().split("T")[0]);
+  const [endDate, setEndDate] = useState(new Date().toISOString().split("T")[0]);
+  
   useEffect(() => {
     fetchVacationsAndExams();
     fetchAdminName()
@@ -58,15 +60,35 @@ function Settingscomp() {
   };
 
 
-  const [academicPeriods, setAcademicPeriods] = useState({
-    semestre1: { start: "", end: "" },
-    semestre2: { start: "", end: "" },
-    periode1: { start: "", end: "" },
-    periode2: { start: "", end: "" },
-    periode3: { start: "", end: "" },
+  const [academicSemesters, setAcademicSemesters] = useState({
+    semestre1: { name:"Semester1", start: new Date().toISOString().split("T")[0], end: new Date().toISOString().split("T")[0] },
+    semestre2: {name:"Semester2", start: new Date().toISOString().split("T")[0], end: new Date().toISOString().split("T")[0] },
+  
   });
 
+  const[academicPeriods,setAcademicPeriods]=useState({
+    periode1: { name:"Period1",start: new Date().toISOString().split("T")[0], end: new Date().toISOString().split("T")[0], Semesterid:1 },
+    periode2: { name:"Period2",start: new Date().toISOString().split("T")[0], end: new Date().toISOString().split("T")[0], Semesterid:1 },
+    periode3: { name:"Period3",start: new Date().toISOString().split("T")[0], end: new Date().toISOString().split("T")[0], Semesterid:2 },
+  })
 
+  const [tempDates, setTempDates] = useState({}); // Temporary input values
+
+  const handleDateChange = (stateSetter, tempStateSetter, field, key, value) => {
+    tempStateSetter((prev) => ({
+      ...prev,
+      [key]: { ...prev[key], [field]: value },
+    }));
+  
+    // Update main state only when the input is a complete date (YYYY-MM-DD)
+    if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
+      stateSetter((prev) => ({
+        ...prev,
+        [key]: { ...prev[key], [field]: value },
+      }));
+    }
+  };
+  
   const handleInputChange = (period, field, value) => {
     setAcademicPeriods((prev) => ({
       ...prev,
@@ -75,9 +97,21 @@ function Settingscomp() {
   };
 
   // Send data to backend
-  const handleSave = async () => {
+  const handleSaveSemesters = async () => {
     try {
-      await axios.post("http://your-backend-api.com/save-periods", academicPeriods);
+      console.log({academicSemesters})
+      await axios.post("http://localhost:3000/api/user/save-semesters", {academicSemesters});
+      alert("Data saved successfully!");
+    } catch (error) {
+      console.error("Error saving data:", error);
+      alert("Failed to save data.");
+    }
+  };
+
+  const handleSavePeriods = async () => {
+    try {
+      console.log({academicPeriods})
+      await axios.post("http://localhost:3000/api/user/save-periods", {academicPeriods});
       alert("Data saved successfully!");
     } catch (error) {
       console.error("Error saving data:", error);
@@ -140,18 +174,14 @@ function Settingscomp() {
 
   
 
-  const handleSaveVE = async () => {
-    const data = { vacations, exams };
-    try {
-      await axios.post("http://your-backend-api.com/save", data, {
-        headers: { "Content-Type": "application/json" },
-      });
-      alert("Data saved successfully!");
-    } catch (error) {
-      console.error("Error saving data:", error);
-      alert("Failed to save data.");
-    }
-  };
+ function handleSaveVE(){
+  try{
+    axios.post("http://localhost:3000/api/user/save-holiday",{startDate,endDate}).then(res=>console.log("data sent!", res))
+  }
+  catch(error){
+    console.log("error at saving the holiday: ",error)
+  }
+ }
 
   return (
     <div className={styles.settingscontainer}>
@@ -182,30 +212,35 @@ function Settingscomp() {
       <main className={styles.content}>
 
       <section className={styles.card}>
-          <h3>Academic Periods (S1, S2)</h3>
+          <h3>Academic Seemsters (S1, S2)</h3>
           <hr />
           <div className={styles.divperiod}>
-          {["semestre1", "semestre2"].map((semestre, index) => (
-            <div key={index} className={styles.period}>
-              <h2>{`Semester ${index + 1}:`}</h2>
+          {Object.keys(academicSemesters).map((semestre) => (
+  <div key={semestre} className={styles.period}>
+    <h2>{academicSemesters[semestre].name}</h2>
 
-              <label >start:</label>
-              <input
-                type="date"
-                value={academicPeriods[semestre].start}
-                onChange={(e) => handleInputChange(semestre, "start", e.target.value)}
-              />
-                    <label >end:</label>
-              <input
-                type="date"
-                value={academicPeriods[semestre].end}
-                onChange={(e) => handleInputChange(semestre, "end", e.target.value)}
-              />
-            </div>
-            
-          ))}
-          <button className={styles.savebtn2} onClick={handleSave}>Save Changes</button>
-          </div>
+    <label>Start:</label>
+    <input
+      type="date"
+      value={tempDates[semestre]?.start || academicSemesters[semestre].start}
+      onChange={(e) =>
+        handleDateChange(setAcademicSemesters, setTempDates, "start", semestre, e.target.value)
+      }
+    />
+
+    <label>End:</label>
+    <input
+      type="date"
+      value={tempDates[semestre]?.end || academicSemesters[semestre].end}
+      onChange={(e) =>
+        handleDateChange(setAcademicSemesters, setTempDates, "end", semestre, e.target.value)
+      }
+    />
+  </div>
+))}
+
+    <button className={styles.savebtn2} onClick={handleSaveSemesters}>Save Changes</button>
+  </div>
          </section>
 
 
@@ -214,31 +249,33 @@ function Settingscomp() {
           <h3>Academic Periods (P1, P2, P3)</h3>
           <hr />
           <div className={styles.divperiod}>
-          {[1, 2, 3].map((num) => (
-            <div key={num} className={styles.period}>
-               
-              <h2>Period {num}:</h2>
+          {Object.keys(academicPeriods).map((periode) => (
+  <div key={periode} className={styles.period}>
+    <h2>{academicPeriods[periode].name}</h2>
 
-              <label >start:</label>
-              <input
-                type="date"
-                value={academicPeriods[`periode${num}`].start}
-                onChange={(e) => handleInputChange(`periode${num}`, "start", e.target.value)}
-              />
-               <label >end:</label>
+    <label>Start:</label>
+    <input
+      type="date"
+      value={tempDates[periode]?.start || academicPeriods[periode].start}
+      onChange={(e) =>
+        handleDateChange(setAcademicPeriods, setTempDates, "start", periode, e.target.value)
+      }
+    />
 
-              <input
-                type="date"
-                value={academicPeriods[`periode${num}`].start}
-                onChange={(e) => handleInputChange(`periode${num}`, "end", e.target.value)}
-              />
-              
-            </div>
-           
+    <label>End:</label>
+    <input
+      type="date"
+      value={tempDates[periode]?.end || academicPeriods[periode].end}
+      onChange={(e) =>
+        handleDateChange(setAcademicPeriods, setTempDates, "end", periode, e.target.value)
+      }
+    />
+  </div>
+))}
 
-          ))}
+
           
-          <button className={styles.savebtn2} onClick={handleSave}>Save Changes</button>
+          <button className={styles.savebtn2} onClick={handleSavePeriods}>Save Changes</button>
         </div>
         </section>
         
@@ -262,10 +299,10 @@ function Settingscomp() {
                   </button>
                 </div>
                 <label>Start:</label>
-                <input type="date" value={vac.start} onChange={(e) => handleInputChange("vacation", index, "start", e.target.value)} />
+                <input type="date" value={vac.start} onChange={(e) => setStartDate(e.target.value)} />
                 <label>End:</label>
                
-                <input type="date" value={vac.end} onChange={(e) => handleInputChange("vacation", index, "end", e.target.value)} />
+                <input type="date" value={vac.end} onChange={(e) => setEndDate(e.target.value)} />
 
 </div>
             ))}
