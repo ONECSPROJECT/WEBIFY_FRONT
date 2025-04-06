@@ -68,23 +68,29 @@ function Tableteacher() {
 
   const handleDeleteClick = (teacher) => {
     setSelectedTeacher(teacher);
+    console.log(teacher)
     setShowDeleteModal(true);
   };
-
-  const confirmDelete = async () => {
+  const confirmDelete = async (e) => {
     if (!selectedTeacher) return;
-
+    e.preventDefault();
+  
     try {
-      await axios.delete(`http://your-backend-api.com/teachers/${selectedTeacher.id}`);
-      setTeachers(teachers.filter((t) => t.id !== selectedTeacher.id)); // Remove from UI
-      // fetchTeachers();
+      await axios.delete(`http://localhost:3000/api/user/delete-teacher?user_id=${selectedTeacher.user_id}`);
+      
+      setTeachers(prev => prev.filter(t => t.user_id !== selectedTeacher.user_id));
+      alert("Teacher deleted!")
+  
     } catch (error) {
-      console.error("Error deleting teacher:", error);
+      console.error("eror deleting teacher:", error);
+      alert("something went wrong")
+    } finally {
+       setShowDeleteModal(false)
+       console.log(typeof showDeleteModal)
     }
-
-    setShowDeleteModal(false); 
   };
-
+  
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -168,12 +174,12 @@ function Tableteacher() {
         <div className="modaldelete">
           <div className="modaldelete-content">
           <div className="anh">
-            <h3>Remove {selectedTeacher?.fullName}?</h3>
+            <h3>Remove {selectedTeacher?.full_name}?</h3>
             <AiOutlineClose className="close-icon" onClick={() => setShowDeleteModal(false)} />
            </div>
           <hr />
             <h6>
-              Are you sure you want to remove <strong>{selectedTeacher?.fullName}</strong>? This action cannot be undone.
+              Are you sure you want to remove <strong>{selectedTeacher?.full_name}</strong>? This action cannot be undone.
             </h6>
             <div className="btnddiv">
             <button className="cancel" onClick={() => setShowDeleteModal(false)}>

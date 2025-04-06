@@ -26,7 +26,10 @@ function ManageAbsences() {
   const [allow,setAllow]=useState(true)
   useEffect(()=>{
     fetchHolidays()
-    },[date])
+    if(allow){
+      fetchSelectiveTeachers()
+    }
+    },[])
 
    
  
@@ -100,6 +103,7 @@ function ManageAbsences() {
     try {
       const response = await axios.get("http://localhost:3000/api/user/fetch-teachers");
       setTeachersList(response.data);
+      console.log("teachers object:",response.data)
     } catch (error) {
       console.error("Error fetching teachers:", error);
     }
@@ -142,10 +146,18 @@ function ManageAbsences() {
   
      async function fetchSelectiveTeachers() {
       try {
+        console.log("day:", dateToDay(date))
        const formattedDate = date.toISOString().split("T")[0]; //Format date
-         const response = await axios.post("",{selectedOption: selectedOption, date: formattedDate,day: dateToDay(date),}); //Start with the option, if it's a long term absence, then show all teachers, else use the formatted date to exclude holidays and sock leaves, and then filter the teachers by the day
-       setTeachersList(response.data);
+         const response = await axios.get(`http://localhost:3000/api/user/get-selective-teachers?date=${formattedDate}&day=${dateToDay(date)}`) //Start with the formatted date to exclude holidays and sick leaves, and then filter the teachers by the day
+       if (typeof response.data==="string"){
+        setComponent(<h2>Today is a weekend.</h2>);       
+        setTeachersList([])
+       }
+       else{
+        setTeachersList(response.data)
+       }
       }
+
       
       catch (error) {
         console.log("error");
@@ -199,7 +211,7 @@ function ManageAbsences() {
       </div>
               {selectedOption==="singleDay"?(
                 <div className={styles.date}>
-                  <label htmlFor=""><FaCalendarDays/>Select a date &nbsp;</label>
+                  <label htmlFor=""><FaCalendarDays/>Select a date({dateToDay(date)}) &nbsp;</label>
                 <input type="date" value={date.toISOString().split("T")[0]} onChange={handleInputChange} />        
                 </div>):(
         <div className={styles.date}>

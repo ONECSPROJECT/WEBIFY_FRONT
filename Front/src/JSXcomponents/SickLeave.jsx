@@ -8,7 +8,7 @@ function SickLeave({teacher,onClose,startDate,endDate}) {
 
     async function handleConfirm() {
       try{
-        const response=axios.post('',{teacher:teacher.teacher_id,startDate:startDate,endDate:endDate})
+        const response=axios.post('http://localhost:3000/api/user/save-vacation',{teacher:teacher.user_id,startDate:startDate,endDate:endDate})
         console.log("absence recorded")
       }
       catch(error){

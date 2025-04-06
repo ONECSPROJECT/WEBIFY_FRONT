@@ -285,7 +285,7 @@ function Settingscomp() {
 
 
         <section className={styles.card}>
-          <h3>University Vacations</h3>
+          <h3>University holidays</h3>
           <hr />
           <div className={styles.divperiod}>
             {vacations.map((vac, index) => (
