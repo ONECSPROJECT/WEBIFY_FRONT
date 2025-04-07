@@ -33,6 +33,7 @@ function SupTimeTables() {
 
     fetchSchedules();
   }, []);
+  const dayOrder = ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   return (
     <>
@@ -56,23 +57,30 @@ function SupTimeTables() {
   </thead>
   <tbody>
     {Object.entries(
-      scheds.reduce((acc,curr)=>{
-        acc[curr.day_of_week]=acc[curr.day_of_week] || []
-        acc[curr.day_of_week].push(curr)
-        return acc
-      },{})
-    ).map(([day, sessions])=>
-      sessions.map((s, idx) =>(
-        <tr key={`${day}-${idx}`}>
-          {idx===0&& (
-            <td rowSpan={sessions.length} style={{fontWeight: 'bold'}}>{day}</td>)}
-          <td>{s.starttime}</td>
-          <td>{s.duration} min</td>
-          <td>{s.session_type}</td>
-          <td>{s.speciality || "null"}</td>
-          <td>{s.promotion || "Unknown"}</td>
-          <td>{s.presence}</td>
-        </tr>)))}
+      scheds.reduce((acc, curr) => {
+        acc[curr.day_of_week] = acc[curr.day_of_week] || [];
+        acc[curr.day_of_week].push(curr);
+        return acc;
+      }, {})
+    )
+      .sort(([a], [b]) => dayOrder.indexOf(a) - dayOrder.indexOf(b)) // 🪄 the magic line
+      .map(([day, sessions]) =>
+        sessions.map((s, idx) => (
+          <tr key={`${day}-${idx}`}>
+            {idx === 0 && (
+              <td rowSpan={sessions.length} style={{ fontWeight: 'bold' }}>
+                {day}
+              </td>
+            )}
+            <td>{s.starttime}</td>
+            <td>{s.duration} min</td>
+            <td>{s.session_type}</td>
+            <td>{s.speciality || "null"}</td>
+            <td>{s.promotion || "Unknown"}</td>
+            <td>{s.presence}</td>
+          </tr>
+        ))
+      )}
   </tbody>
 </table>
             </div>))}

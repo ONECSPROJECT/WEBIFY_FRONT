@@ -258,12 +258,20 @@ if (totalCourseHours >= 6) {
           neededTutHours =0
           continue;
         }
+        updatedSchedule.push(session)
+
       } else {
         session.isExtra = true//mark the rest as extra
+        updatedSchedule.push(session)
+
       }
+    }
+    else{
+      session.isExtra = true//mark the rest as extra
       updatedSchedule.push(session)
+
     } 
-  
+
   }
 
   

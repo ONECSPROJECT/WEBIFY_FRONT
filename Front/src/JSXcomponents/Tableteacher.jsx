@@ -69,8 +69,10 @@ function Tableteacher() {
     if (!selectedTeacher) return;
     
     try {
-      await axios.put(`http://your-backend-api.com/teachers/${selectedTeacher.id}`, selectedTeacher);
-      // fetchTeachers();
+      await axios.put(`http://localhost:3000/api/user/mark-enddate?enddate=${date}`)
+      console.log("enddate marked!")
+      await axios.post(`http://localhost:3000/api/user/update-rank`,{teacher:selectedTeacher.user_id,grade:grade,date:date});
+      fetchTeachers();
       // Update the teachers state
       setTeachers(teachers.map(t => t.id === selectedTeacher.id ? selectedTeacher : t));
 
@@ -230,7 +232,11 @@ function Tableteacher() {
               <input type="text" name="ccp" value={selectedTeacher.ccp} onChange={handleInputChange} />
 
               
-              <input type="text" name="grade" value={selectedTeacher.grade} onChange={handleInputChange} />
+              <select value={grade} onChange={(e)=>setgrade(e.target.value)} name="" id="">
+                {grades.map((grade)=>(
+                  <option key={grade.rankid} value={grade.rankid}>{grade.name}</option>
+                ))}
+              </select>
 
               <select name="state" value={selectedTeacher.state} onChange={handleInputChange}>
                 <option value="Intérieur">Intérieur</option>
@@ -262,7 +268,7 @@ function Tableteacher() {
             <tr key={teacher.id}>
               <td>{teacher.fullname}</td>
               <td>{teacher.email}</td>
-              <td>{teacher.grade}</td>
+              <td>{teacher.faculty}</td>
               <td>{teacher.payment_information}</td>
               <td>{teacher.state}</td>
               <td>
