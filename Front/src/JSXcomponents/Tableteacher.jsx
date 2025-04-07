@@ -257,6 +257,7 @@ function Tableteacher() {
           <tr>
             <th>Full Name</th>
             <th>Email</th>
+            <th>Grade</th>
             <th>Faculty</th>
             <th>CCP</th>
             <th>State</th>
@@ -268,6 +269,7 @@ function Tableteacher() {
             <tr key={teacher.id}>
               <td>{teacher.fullname}</td>
               <td>{teacher.email}</td>
+              <td>{teacher.current_rank}</td>
               <td>{teacher.faculty}</td>
               <td>{teacher.payment_information}</td>
               <td>{teacher.state}</td>
