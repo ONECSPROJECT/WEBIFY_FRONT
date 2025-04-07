@@ -57,7 +57,7 @@ return(
       Forgot Password?</button>
   </form>
 </div>
-<p>Devoloped by <strong>Webify</strong></p>
+<p className={styles.dev}>Devoloped by <strong>Webify</strong></p>
 </div>
  
 )

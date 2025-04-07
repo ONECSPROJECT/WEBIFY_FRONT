@@ -257,7 +257,6 @@ opacity: 0.8;
   font-size: 16px;
   font-weight: bold;
   color: black;
-  transform: translateY(-125px);
 }
 .addContainer .box .buttons{
   transform: scale(1.1);
@@ -344,6 +343,8 @@ transform: translateY(2px)
 .list li .buttons .editbutton div{
   transform: scale(1.1) rotateY(180deg) translateY(1px);
 }
+
+
 
 .editbutton{
   width: 8%;

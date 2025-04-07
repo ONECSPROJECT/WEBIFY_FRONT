@@ -19,9 +19,7 @@ const [fileURL, setFileURL] = useState("")
   const [fileName, setFileName] = useState(""); 
   const [timetables, setTimetables]=useState([])
   const fileInputRef = useRef(null);
-  const[promo, setPromo]=useState("1CPI")
   const[semester, setSemester]=useState("Semester 1")
-  const[section, setSection]=useState("1")
   const[showeditModal,setshowEditModal]=useState(false)
 const [editingTimetable,setEditingTimetable]=useState(null)
 const [deletingtimetable, setdeletingtimetable]=useState(null)
@@ -63,8 +61,11 @@ function handleDelete(timetable) {
     setTimetables((prev) => {
       const updatedTimetables = [
         ...prev,
-        { id: Date.now(),promo, semester, section, fileName}
+        { id: Date.now(), semester, fileName}
       ]
+      console.log("semester",semester)
+      console.log("file name",fileName)
+
       setShowAddmodal(false)
       setSemester("Semester 1")
       setFileName("")
@@ -81,11 +82,9 @@ function handleDelete(timetable) {
     if (!editingTimetable) return;
     setTimetables(prev=>
       prev.map(item =>
-        item.id===editingTimetable.id?{ ...item, promo, semester, section, fileName}:item))
+        item.id===editingTimetable.id?{ ...item, semester, fileName}:item))
     setEditingTimetable(null)
-    setPromo("")
     setSemester("")
-    setSection("")
     setFileName("")
     setshowEditModal(false)
   }
@@ -94,9 +93,7 @@ function handleDelete(timetable) {
 
   useEffect(()=>{
     if (editingTimetable) {
-      setPromo(editingTimetable.promo|| "");
       setSemester(editingTimetable.semester|| "");
-      setSection(editingTimetable.section|| "");
       setFileName(editingTimetable.fileName|| "");
     }
   }, [editingTimetable])
@@ -126,7 +123,7 @@ function handleDelete(timetable) {
 
             <div className={styles.semesters}>
               <label htmlFor="">Semester</label> <br />
-              <select name="" id="" onChange={(e)=>setSemester(e.target.value)} >select
+              <select value={semester} name="" id="" onChange={(e)=>setSemester(e.target.value)} >select
                 <option value="Semester 1">Semester 1</option>
                 <option value="Semester 2">Semester 2</option>
               </select>
@@ -140,7 +137,7 @@ function handleDelete(timetable) {
 
       </div>
       <p>{fileName ||"Drag and drop or click to upload"}</p>
-      <input ref={fileInputRef} required   onChange={handleFileChange}   className={styles.fileInput} type="file"/>
+      <input ref={fileInputRef}    onChange={handleFileChange}   className={styles.fileInput} type="file"/>
     </div>
       </div>
               <div className={styles.buttons}>

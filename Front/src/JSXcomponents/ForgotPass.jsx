@@ -47,7 +47,7 @@ function ForgotPass(){
     <br />
     <span className={styles.infoText}>Check your email for a password reset link.</span>
   </div>
-  <p>Devoloped by <strong>Webify</strong></p>
+  <p className={styles.dev}>Devoloped by <strong>Webify</strong></p>
 
 </div>
 

@@ -15,6 +15,13 @@
     position: absolute;
     width: 20px;
   }
+  .dev{
+    
+      color: white;
+      position: relative;
+      top: 8rem;
+    
+  }
   
   .container {
     font-weight: 800;
@@ -129,8 +136,3 @@
     box-sizing: inherit;
   }
   
-  p{
-    color: white;
-    position: relative;
-    top: 8rem;
-  }
