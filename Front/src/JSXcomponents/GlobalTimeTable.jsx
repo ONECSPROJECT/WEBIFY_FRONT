@@ -65,9 +65,6 @@ function handleDelete(timetable) {
         ...prev,
         { id: Date.now(),promo, semester, section, fileName}
       ]
-      console.log("semester",semester)
-      console.log("file name",fileName)
-
       setShowAddmodal(false)
       setSemester("Semester 1")
       setFileName("")
@@ -129,7 +126,7 @@ function handleDelete(timetable) {
 
             <div className={styles.semesters}>
               <label htmlFor="">Semester</label> <br />
-              <select value={semester} name="" id="" onChange={(e)=>setSemester(e.target.value)} >select
+              <select name="" id="" onChange={(e)=>setSemester(e.target.value)} >select
                 <option value="Semester 1">Semester 1</option>
                 <option value="Semester 2">Semester 2</option>
               </select>
@@ -143,7 +140,7 @@ function handleDelete(timetable) {
 
       </div>
       <p>{fileName ||"Drag and drop or click to upload"}</p>
-      <input ref={fileInputRef}    onChange={handleFileChange}   className={styles.fileInput} type="file"/>
+      <input ref={fileInputRef} required   onChange={handleFileChange}   className={styles.fileInput} type="file"/>
     </div>
       </div>
               <div className={styles.buttons}>
