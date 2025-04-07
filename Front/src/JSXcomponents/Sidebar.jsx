@@ -23,7 +23,8 @@ const Sidebar = () => {
         <NavLink to="/adminpage/manage-absences" className="nav-item"><FaCalendarAlt className="icon" /> Manage Absences</NavLink>
         <NavLink to="/adminpage/global-timetable" className="nav-item"><FaCalendarCheck className="icon" />Global TimeTable</NavLink>
         <NavLink to="/adminpage/payments" className="nav-item">
-          <FaMoneyBill className="icon" /> Payments</NavLink>
+        <FaMoneyBill className="icon" /> Payments</NavLink>
+      
         <NavLink to="/adminpage/sup-hours-timetable" className="nav-item">
           <FaClock className="icon" /> Sup Hours Timetable </NavLink>
         <NavLink to="/adminpage/settings" className="nav-item">
