@@ -72,6 +72,7 @@ function Settingscomp() {
     periode3: { name:"Period3",start: new Date().toISOString().split("T")[0], end: new Date().toISOString().split("T")[0], Semesterid:2 },
   })
 
+
   const [tempDates, setTempDates] = useState({}); // Temporary input values
 
   const handleDateChange = (stateSetter, tempStateSetter, field, key, value) => {
@@ -212,7 +213,7 @@ function Settingscomp() {
       <main className={styles.content}>
 
       <section className={styles.card}>
-          <h3>Academic Seemsters (S1, S2)</h3>
+          <h3>Academic Semesters (S1, S2)</h3>
           <hr />
           <div className={styles.divperiod}>
           {Object.keys(academicSemesters).map((semestre) => (
@@ -291,7 +292,7 @@ function Settingscomp() {
             {vacations.map((vac, index) => (
               <div key={vac.id} className={styles.period}>
                 <div className={styles.diviconp}>
-                  <h2>Vacation {index + 1}:</h2>
+                  <h2>Holiday {index + 1}:</h2>
                  
                   <button onClick={() => confirmDeleteVacation(vac.id)}  className={styles.deleteBtn}>
                   
@@ -349,7 +350,7 @@ function Settingscomp() {
         <div className={styles.modalconf}>
           <div className={styles.modalContentconf}>
             <h3>Confirm Deletion</h3>
-            <h1>Are you sure you want to delete this vacation?</h1>
+            <h1>Are you sure you want to delete this holiday?</h1>
             <div className={styles.btnddiv}>
             <button onClick={() => setShowVacationModal(false)} className={styles.confirmBtnconf}>Cancel</button>
             <button onClick={deleteVacation} className={styles.cancelBtnconf}>Confirm</button>

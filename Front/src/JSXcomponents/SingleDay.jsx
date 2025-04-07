@@ -11,7 +11,7 @@ function SingleDay({teacher, day, date, onClose}) {
     const [absentSessions, setAbsentSessions] =useState({})
     useEffect(()=>{
       async function getExtraSessions(){
-        await axios.get(`http://localhost:3000/api/user/fetch-extra-session?teacher=${teacher?.teacherid}`).then(res=>setSessions(res.data))
+        await axios.get(`http://localhost:3000/api/user/fetch-extra-session?teacher=${teacher?.teacherid}&day=${day}`).then(res=>setSessions(res.data))
         if(!sessions){
           console.log("empty")
         }

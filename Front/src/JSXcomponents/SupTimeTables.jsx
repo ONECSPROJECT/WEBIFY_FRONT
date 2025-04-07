@@ -41,35 +41,41 @@ function SupTimeTables() {
         <div className={styles.scheds}>
           {Object.entries(groupedByTeacher).map(([teacher,scheds], index)=>(
             <div key={index}>
-              <h3>Extra hours Schedule for Teacher: {teacher}</h3>
+              <h3>Extra hours schedule for {teacher} and their presence this week:</h3>
               <table>
-                <thead>
-                  <tr>
-                    <th>Day</th>
-                    <th>Start Time</th>
-                    <th>Duration</th>
-                    <th>Session Type</th>
-                    <th>Speciality</th>
-                    <th>Promotion</th>
-                    <th>Presence</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {scheds.map((s, idx) => (
-                    <tr key={idx}>
-                      <td>{s.day_of_week}</td>
-                      <td>{s.starttime}</td>
-                      <td>{s.duration} min</td>
-                      <td>{s.session_type}</td>
-                      <td>{s.speciality || "null"}</td>
-                      <td>{s.promotion || "Unknown"}</td>
-                      <td>{s.presence}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          ))}
+  <thead>
+    <tr>
+      <th>Day</th>
+      <th>Start Time</th>
+      <th>Duration</th>
+      <th>Session Type</th>
+      <th>Speciality</th>
+      <th>Promotion</th>
+      <th>Presence</th>
+    </tr>
+  </thead>
+  <tbody>
+    {Object.entries(
+      scheds.reduce((acc,curr)=>{
+        acc[curr.day_of_week]=acc[curr.day_of_week] || []
+        acc[curr.day_of_week].push(curr)
+        return acc
+      },{})
+    ).map(([day, sessions])=>
+      sessions.map((s, idx) =>(
+        <tr key={`${day}-${idx}`}>
+          {idx===0&& (
+            <td rowSpan={sessions.length} style={{fontWeight: 'bold'}}>{day}</td>)}
+          <td>{s.starttime}</td>
+          <td>{s.duration} min</td>
+          <td>{s.session_type}</td>
+          <td>{s.speciality || "null"}</td>
+          <td>{s.promotion || "Unknown"}</td>
+          <td>{s.presence}</td>
+        </tr>)))}
+  </tbody>
+</table>
+            </div>))}
         </div>
       </div>
     </>

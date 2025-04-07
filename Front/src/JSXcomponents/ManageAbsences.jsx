@@ -24,12 +24,6 @@ function ManageAbsences() {
   const [clickedTeacher, setClickedTeacher]=useState(null)
   //this performs when the page loads
   const [allow,setAllow]=useState(true)
-  useEffect(()=>{
-    fetchHolidays()
-    if(allow){
-      fetchSelectiveTeachers()
-    }
-    },[])
 
    
  
@@ -48,7 +42,7 @@ function ManageAbsences() {
       console.log("SingleDay selected");
   
       if (!allow) {
-        // If it's a holiday, display the message
+        //if it's a holiday then display the message
         console.log("Holiday detected");
         setComponent(<h2>Today is a holiday, nothing to display!</h2>);
         return;
@@ -115,7 +109,10 @@ function ManageAbsences() {
     fetchAllTeachers();
    }
    else{
-    fetchSelectiveTeachers();
+    fetchHolidays()
+    if(allow){
+      fetchSelectiveTeachers()
+    }
    }
  }, [selectedOption,date]);
 
@@ -149,9 +146,13 @@ function ManageAbsences() {
         console.log("day:", dateToDay(date))
        const formattedDate = date.toISOString().split("T")[0]; //Format date
          const response = await axios.get(`http://localhost:3000/api/user/get-selective-teachers?date=${formattedDate}&day=${dateToDay(date)}`) //Start with the formatted date to exclude holidays and sick leaves, and then filter the teachers by the day
-       if (typeof response.data==="string"){
+       if ( response.data==="Today is a weekend"){
         setComponent(<h2>Today is a weekend.</h2>);       
         setTeachersList([])
+       }
+       else if(response.data==="No teacher has extra sessions today"){
+        setComponent(<h2>No teacher has extra sessions today.</h2>);       
+
        }
        else{
         setTeachersList(response.data)

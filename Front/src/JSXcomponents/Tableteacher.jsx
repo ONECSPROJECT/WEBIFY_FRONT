@@ -6,6 +6,7 @@ import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
 import axios from "axios";
 
 function Tableteacher() {
+  const [date,setDate]=useState(new Date().toISOString().split("T")[0])
   const [teachers, setTeachers] = useState([]);
   const [first_name, setfirstname] = useState("");
   const [last_name, setlastname] = useState("");
@@ -13,7 +14,8 @@ function Tableteacher() {
   const [payment_information, setccp] = useState("");
   const [password, setpassword] = useState("");
   const [state, setstate] = useState("Intérieur");
-  const [grade, setgrade] = useState("");
+  const [grades, setgrades] = useState([]);
+  const [grade,setgrade]=useState()
   const [faculty, setfaculty]=useState("esi-sba")
   const [selectedTeacher, setSelectedTeacher] = useState(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
@@ -37,10 +39,22 @@ function Tableteacher() {
       console.error("Error fetching teachers:", error);
     }
   };
+
+  async function fetchRanks(){
+    try{
+      const res =await axios.get("http://localhost:3000/api/user/fetch-ranks");
+      setgrades(res.data)
+      console.log("grades:", res.data);
+    } catch(error){
+      console.log(error)
+    }
+  }
+  
   
 
  useEffect(() => {
    fetchTeachers();
+   fetchRanks()
  }, []);
 
 
@@ -94,7 +108,7 @@ function Tableteacher() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/user/register", {first_name, last_name, state, payment_information, faculty, email, password, role:"teacher" });
+      await axios.post("http://localhost:3000/api/user/register", {first_name, last_name, state, payment_information, grade, faculty, email, password, role:"teacher" ,date});
       alert("Teacher added successfully!"); 
        fetchTeachers();
     } catch (error) {
@@ -143,7 +157,11 @@ function Tableteacher() {
               <label>CCP</label>
               <input type="text" value={payment_information} onChange={(e) => setccp(e.target.value)} />
               <label>Grade</label>
-              <input type="text" value={grade} onChange={(e) => setgrade(e.target.value)} />
+              <select value={grade} onChange={(e)=>setgrade(e.target.value)} name="" id="">
+                {grades.map((grade)=>(
+                  <option key={grade.rankid} value={grade.rankid}>{grade.name}</option>
+                ))}
+              </select>
               <label>State</label>
               <select value={state} onChange={(e) => {const selectedValue = e.target.value;
                 setstate(selectedValue);
@@ -233,7 +251,7 @@ function Tableteacher() {
           <tr>
             <th>Full Name</th>
             <th>Email</th>
-            <th>Grade</th>
+            <th>Faculty</th>
             <th>CCP</th>
             <th>State</th>
             <th>Actions</th>
