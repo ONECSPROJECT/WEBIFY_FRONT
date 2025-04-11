@@ -53,10 +53,14 @@ function Tableteacher() {
   
 
  useEffect(() => {
+  setTeachers([])
    fetchTeachers();
    fetchRanks()
  }, []);
 
+ useEffect(()=>{
+  console.log("teacher list", teachers)
+},[teachers])
 
   // Function to handle input changes
   const handleInputChange = (e) => {
@@ -72,9 +76,9 @@ function Tableteacher() {
       await axios.put(`http://localhost:3000/api/user/mark-enddate?enddate=${date}`)
       console.log("enddate marked!")
       await axios.post(`http://localhost:3000/api/user/update-rank`,{teacher:selectedTeacher.user_id,grade:grade,date:date});
-      fetchTeachers();
       // Update the teachers state
       setTeachers(teachers.map(t => t.id === selectedTeacher.id ? selectedTeacher : t));
+      fetchTeachers();
 
       setShowEditModal(false); // Close modal
     } catch (error) {

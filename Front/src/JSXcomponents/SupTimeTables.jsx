@@ -5,13 +5,17 @@ import Sidebar from './Sidebar';
 
 function SupTimeTables() {
   const [groupedByTeacher, setGroupedByTeacher] = useState({});
-  
+  const [date,getDate]=useState(new Date().toISOString().split("T")[0])
+  const [period,setPeriod]=useState(0)
+  useEffect(()=>{
+  console.log("period is",period)
+  },[period])
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/user/fetch-scheds");
-        const allSchedules = response.data;
-
+        const response = await axios.get(`http://localhost:3000/api/user/fetch-scheds?date=${date}`);
+        const allSchedules = response.data.scheds;
+        setPeriod(response.data.periodid)
     
 
 
@@ -53,6 +57,7 @@ function SupTimeTables() {
       <th>Speciality</th>
       <th>Promotion</th>
       <th>Presence</th>
+      <th>Period</th>
     </tr>
   </thead>
   <tbody>
@@ -63,7 +68,7 @@ function SupTimeTables() {
         return acc;
       }, {})
     )
-      .sort(([a], [b]) => dayOrder.indexOf(a) - dayOrder.indexOf(b)) // 🪄 the magic line
+      .sort(([a], [b]) => dayOrder.indexOf(a) - dayOrder.indexOf(b))
       .map(([day, sessions]) =>
         sessions.map((s, idx) => (
           <tr key={`${day}-${idx}`}>
@@ -78,6 +83,7 @@ function SupTimeTables() {
             <td>{s.speciality || "null"}</td>
             <td>{s.promotion || "Unknown"}</td>
             <td>{s.presence}</td>
+            <td>{period}</td>
           </tr>
         ))
       )}

@@ -27,9 +27,17 @@ function ManageAbsences() {
 
    
  
-    function fetchHolidays(){
-      axios.get(`http://localhost:3000/api/user/fetch-holiday?date=${date.toISOString().split("T")[0]}`).then(res=>{res.data? setAllow(false):setAllow(true)})
-   }
+  async function fetchHolidays() {
+    try {
+      const res = await axios.get(`http://localhost:3000/api/user/fetch-holiday?date=${date.toISOString().split("T")[0]}`);
+      const newValue = !res.data
+      setAllow(newValue);
+      console.log("NEW allow value:", newValue);
+    } catch (err) {
+      console.error("Error fetching holidays:", err);
+    }
+  }
+  
 
   const formattedDate=date.toISOString().split("T")[0]
   function dateToDay(date) {
@@ -38,9 +46,15 @@ function ManageAbsences() {
   }
 
   useEffect(() => {
+    console.log("selected option is",selectedOption)
     if (selectedOption === "singleDay") {
+      setTeachersList([])
       console.log("SingleDay selected");
-  
+         fetchHolidays()
+         if(allow){
+           fetchSelectiveTeachers()
+        }
+      
       if (!allow) {
         //if it's a holiday then display the message
         console.log("Holiday detected");
@@ -66,7 +80,7 @@ function ManageAbsences() {
     
     else if (selectedOption === "sickLeave") {
       console.log("SickLeave selected");
-  
+  fetchAllTeachers()
       // SickLeave should display regardless of `allow`
       if (!selectedTeacher) {
         console.log("Error: No teacher selected for sick leave.");
@@ -91,9 +105,31 @@ function ManageAbsences() {
     }
   }, [selectedTeacher, selectedOption, date, allow, startDate, endDate]);
   
+
+  useEffect(()=>{
+    async function ResetPresence() {
+      try{
+        const day=dateToDay(date)
+        const res =await axios.get(`http://localhost:3000/api/user/get-weekend?day=${day}`)
+        if (res.data) {
+          return;
+        }
+        if(res.data==="Weekend"){
+        fetchAllTeachers();
+        await axios.put(`http://localhost:3000/api/user/add-suphoursBySession?teachers=${teachersList}&date=${date}`)
+        await axios.put(`http://localhost:3000/api/user/reset-presence?date=${date}`)
+        }
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    ResetPresence()
+  }, [])
+  
   
 
   const fetchAllTeachers = async () => {
+    setTeachersList([])
     try {
       const response = await axios.get("http://localhost:3000/api/user/fetch-teachers");
       setTeachersList(response.data);
@@ -104,17 +140,7 @@ function ManageAbsences() {
   };
   
 
- useEffect(() => {
-   if(selectedOption==="sickLeave"){
-    fetchAllTeachers();
-   }
-   else{
-    fetchHolidays()
-    if(allow){
-      fetchSelectiveTeachers()
-    }
-   }
- }, [selectedOption,date]);
+ 
 
 
 
@@ -143,6 +169,7 @@ function ManageAbsences() {
   
      async function fetchSelectiveTeachers() {
       try {
+        setTeachersList([])
         console.log("day:", dateToDay(date))
        const formattedDate = date.toISOString().split("T")[0]; //Format date
          const response = await axios.get(`http://localhost:3000/api/user/get-selective-teachers?date=${formattedDate}&day=${dateToDay(date)}`) //Start with the formatted date to exclude holidays and sick leaves, and then filter the teachers by the day

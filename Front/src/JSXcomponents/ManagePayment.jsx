@@ -8,21 +8,30 @@ const ManagePayments = () => {
   const [payments, setPayments] = useState([]);
   const [filteredPayments, setFilteredPayments] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [academicPeriod, setAcademicPeriod] = useState("P1");
+  const [academicPeriod, setAcademicPeriod] = useState();
   const [statusFilter, setStatusFilter] = useState("All");
+  const [date,setDate]=useState(new Date().toISOString().split("T")[0])
+  const [teacherList,setTeacherList]=useState([])
   //  new kherti 
+
+  useEffect(()=>{
+    console.log(academicPeriod)
+  },[academicPeriod])
   useEffect(() => {
-    // Mock data for testing
-    const mockData = [
-      { id: 1, teacher: "John Doe", supHours: 10, hourlyRate: 2000, totalPayment: 20000, status: "Unpaid", academicPeriod: "P1" },
-      { id: 2, teacher: "Jane Smith", supHours: 15, hourlyRate: 1800, totalPayment: 27000, status: "Paid", academicPeriod: "P1" },
-      { id: 3, teacher: "Emily Johnson", supHours: 12, hourlyRate: 1900, totalPayment: 22800, status: "Unpaid", academicPeriod: "P2" },
-      { id: 4, teacher: "Michael Brown", supHours: 20, hourlyRate: 2100, totalPayment: 42000, status: "Paid", academicPeriod: "P2" },
-      { id: 5, teacher: "Chris Evans", supHours: 8, hourlyRate: 1700, totalPayment: 13600, status: "Unpaid", academicPeriod: "P3" }
-    ];
-  
-    setPayments(mockData.filter(payment => payment.academicPeriod === academicPeriod));
-    setFilteredPayments(mockData.filter(payment => payment.academicPeriod === academicPeriod));
+    async function getTeachers() {
+      try{
+      await axios.get(`http://localhost:3000/api/user/get-teachers?date=${date}`).then(res=>{setTeacherList(res.data.teachers)
+        setAcademicPeriod(res.data.period)
+        console.log(teacherList)
+      })
+      }
+      catch(err){
+        console.log(err)
+      }
+    }
+    getTeachers()
+    setPayments(teacherList.filter(payment => payment.academicPeriod === academicPeriod));
+    setFilteredPayments(teacherList);
   }, [academicPeriod]);
   
 
@@ -102,9 +111,9 @@ const ManagePayments = () => {
           value={academicPeriod}
           onChange={handleAcademicPeriod}
         >
-          <option value="P1">P1</option>
-          <option value="P2">P2</option>
-          <option value="P3">P3</option>
+          <option value={1}>P1</option>
+          <option value={2}>P2</option>
+          <option value={3}>P3</option>
         </select>
         </div>
         <div className={styles.divpay2}>
@@ -126,8 +135,10 @@ const ManagePayments = () => {
         <thead>
           <tr>
             <th>Teacher</th>
-            <th>Sup Hours</th>
-            <th>Hourly Rate (DA)</th>
+            <th>Sup Hours (Course)</th>
+            <th>Sup Hours (Tutorial)</th>
+
+            <th>Sup Hours (Lab woek)</th>
             <th>Total Payment (DA)</th>
             <th>Status</th>
             <th>Action</th>
@@ -138,14 +149,15 @@ const ManagePayments = () => {
             filteredPayments.map((payment, index) => (
               <tr key={index}>
                 <td>{payment.teacher}</td>
-                <td>{payment.supHours}</td>
-                <td>{payment.hourlyRate}</td>
+                <td>{payment.supHourCourse}</td>
+                <td>{payment.supHourTut}</td>
+                <td>{payment.suphourlab}</td>
                 <td>{payment.totalPayment}</td>
-                <td className={payment.status === "Paid" ? styles.paid : styles.unpaid}>
-                  {payment.status}
+                <td className={payment.status === 1?styles.paid : styles.unpaid}>
+                  {payment.status===1? "Paid":"Unpaid"}
                 </td>
                 <td>
-                  {payment.status === "Unpaid" && (
+                  {payment.status === 0 && (
                     <button className={styles.actionButton} onClick={() => handleMarkPaid(payment.id)}>
                       Mark as paid
                     </button>
