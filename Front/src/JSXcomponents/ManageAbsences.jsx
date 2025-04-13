@@ -17,7 +17,7 @@ function ManageAbsences() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(Date.now()+7 *24*60 *60*1000));//one week later by default
   const [search,setSearch]=useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date('04-18-2025'));
   const [teachersList, setTeachersList] = useState([]);
   const [selectedOption, setSelectedOption] = useState("singleDay");
   const [selectedTeacher, setSelectedTeacher] = useState(null); 
@@ -111,14 +111,15 @@ function ManageAbsences() {
       try{
         const day=dateToDay(date)
         const res =await axios.get(`http://localhost:3000/api/user/get-weekend?day=${day}`)
-        if (res.data) {
-          return;
-        }
+        console.log("response is,,,,,", res.data)
         if(res.data==="Weekend"){
-        fetchAllTeachers();
-        await axios.put(`http://localhost:3000/api/user/add-suphoursBySession?teachers=${teachersList}&date=${date}`)
-        await axios.put(`http://localhost:3000/api/user/reset-presence?date=${date}`)
-        }
+          if (res.data === "Weekend") {
+            const teachers=await fetchAllTeachersTWO()
+            console.log("to send for adding sup hurs",teachers)
+            
+            await axios.put(`http://localhost:3000/api/user/add-suphoursBySession?teachers=${teachers}&date=${date.toISOString().split("T")[0]}`);
+            await axios.put(`http://localhost:3000/api/user/reset-presence?date=${date.toISOString().split("T")[0]}`);
+          }}
       } catch (err) {
         console.log(err)
       }
@@ -141,7 +142,15 @@ function ManageAbsences() {
   
 
  
-
+  const fetchAllTeachersTWO = async () => {
+    setTeachersList([])
+    try {
+      const response = await axios.get("http://localhost:3000/api/user/fetch-teachers");
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching teachers:", error);
+    }
+  };
 
 
   function handleStartDateChange(e) {

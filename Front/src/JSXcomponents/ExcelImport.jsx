@@ -58,8 +58,21 @@ function handleDelete(timetable) {
   useEffect(() => {
     setIsEmpty(timetables.length=== 0)
   }, [timetables]);
-  function addTimeTable(e) {
-    e.preventDefault();
+  async function addTimeTable(e) {
+    e.preventDefault()
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file)
+      formData.append("promo", promo);
+      formData.append("semester", semester)
+      formData.append("section", section)
+  
+      const {data} =await axios.post("http://localhost:3000/api/timetable/upload-timetable",formData,{
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
     setTimetables((prev) => {
       const updatedTimetables = [
         ...prev,
@@ -72,6 +85,10 @@ function handleDelete(timetable) {
       return updatedTimetables
     });
   }
+  catch(err){
+    console.log(err)
+  }
+}
   
  
 

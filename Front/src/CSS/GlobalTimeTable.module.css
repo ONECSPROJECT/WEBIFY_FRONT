@@ -8,6 +8,13 @@
   font-family: 'Roboto';
 }
 
+.filter{
+  padding: 10px;
+  border-radius: 5px;
+  border:none;
+  box-shadow: 0 0 3px black;
+}
+
 .options {
   margin-bottom: 20px;
   display: flex;
