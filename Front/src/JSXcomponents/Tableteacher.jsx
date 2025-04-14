@@ -3,6 +3,8 @@ import "../CSS/Tableteacher.css";
 import { FaSearch } from "react-icons/fa";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { AiOutlineSearch, AiOutlineClose } from "react-icons/ai";
+import { BiHide } from "react-icons/bi";
+
 import axios from "axios";
 
 function Tableteacher() {
@@ -86,23 +88,23 @@ function Tableteacher() {
     }
   };
 
-  const handleDeleteClick = (teacher) => {
+  const handleHideClick = (teacher) => {
     setSelectedTeacher(teacher);
     console.log(teacher)
     setShowDeleteModal(true);
   };
-  const confirmDelete = async (e) => {
+  const confirmHide = async (e) => {
     if (!selectedTeacher) return;
     e.preventDefault();
   
     try {
-      await axios.delete(`http://localhost:3000/api/user/delete-teacher?user_id=${selectedTeacher.user_id}`);
+      await axios.put(`http://localhost:3000/api/user/mask-teacher?user_id=${selectedTeacher.user_id}`);
       
       setTeachers(prev => prev.filter(t => t.user_id !== selectedTeacher.user_id));
-      alert("Teacher deleted!")
+      alert("Teacher masked!")
   
     } catch (error) {
-      console.error("eror deleting teacher:", error);
+      console.error("eror masking teacher:", error);
       alert("something went wrong")
     } finally {
        setShowDeleteModal(false)
@@ -114,7 +116,7 @@ function Tableteacher() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:3000/api/user/register", {first_name, last_name, state, payment_information, grade, faculty, email, password, role:"teacher" ,date});
+      await axios.post("http://localhost:3000/api/user/register", {first_name, last_name, state, payment_information, grade, faculty, email, password, role:"teacher" ,date,masked:0});
       alert("Teacher added successfully!"); 
        fetchTeachers();
     } catch (error) {
@@ -203,13 +205,13 @@ function Tableteacher() {
            </div>
           <hr />
             <h6>
-              Are you sure you want to remove <strong>{selectedTeacher?.full_name}</strong>? This action cannot be undone.
+              Are you sure you want to mask <strong>{selectedTeacher?.full_name}</strong>? This action cannot be undone.
             </h6>
             <div className="btnddiv">
             <button className="cancel" onClick={() => setShowDeleteModal(false)}>
               Cancel
             </button>
-            <button className="confirm" onClick={confirmDelete}>
+            <button className="confirm" onClick={confirmHide}>
               Confirm
             </button>
             </div>
@@ -281,8 +283,8 @@ function Tableteacher() {
                 <button className="edit" onClick={() => handleEditClick(teacher)}>
                   <FaEdit />
                 </button>
-                <button className="delete" onClick={() => handleDeleteClick(teacher)}>
-                  <FaTrash />
+                <button className="delete" onClick={() => handleHideClick(teacher)}>
+                <BiHide />
                 </button>
               </td>
             </tr>
