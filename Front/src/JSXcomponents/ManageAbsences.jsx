@@ -145,17 +145,17 @@ function ManageAbsences() {
   const fetchAllTeachersTWO = async () => {
     setTeachersList([])
     try {
-      const response = await axios.get("http://localhost:3000/api/user/fetch-teachers");
-      return response.data;
+      const response =await axios.get("http://localhost:3000/api/user/fetch-teachers")
+      return response.data
     } catch (error) {
-      console.error("Error fetching teachers:", error);
+      console.error("Error fetching teachers",error);
     }
   };
 
 
   function handleStartDateChange(e) {
-    const newStartDate = e.target.value;
-    if (newStartDate.length === 10) {
+    const newStartDate = e.target.value
+    if (newStartDate.length ===10) {
       setStartDate(new Date(newStartDate));
       
     }
@@ -163,8 +163,8 @@ function ManageAbsences() {
   }
   
   function handleEndDateChange(e) {
-    const newEndDate = e.target.value;
-    if (newEndDate.length === 10) {
+    const newEndDate =e.target.value
+    if (newEndDate.length=== 10) {
       setEndDate(new Date(newEndDate));
     }
   }

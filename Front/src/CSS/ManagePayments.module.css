@@ -100,3 +100,12 @@ margin-left: 25PX;
     display:flex;
     justify-content: center;
   }
+
+
+  .export{
+    background-color: #FB6565 ;
+    padding: 6px 12px;
+    color:white;
+    border-radius: 5px;
+    cursor: pointer;
+  }

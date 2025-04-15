@@ -124,7 +124,7 @@ function Tableteacher() {
     }
   };
 
-  const filteredTeachers = teachers.filter((teacher) =>
+  const filteredTeachers =teachers.filter((teacher) =>
     teacher.fullname.toLowerCase().includes(search.toLowerCase())
   );
 
@@ -200,7 +200,7 @@ function Tableteacher() {
         <div className="modaldelete">
           <div className="modaldelete-content">
           <div className="anh">
-            <h3>Remove {selectedTeacher?.full_name}?</h3>
+            <h3>Mask {selectedTeacher?.full_name}?</h3>
             <AiOutlineClose className="close-icon" onClick={() => setShowDeleteModal(false)} />
            </div>
           <hr />

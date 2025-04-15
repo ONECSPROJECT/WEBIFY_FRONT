@@ -79,11 +79,31 @@ const ManagePayments = () => {
     fetchPayments(period);
   };
 
-  const handleMarkPaid = (id) => {
-    axios.put(`/api/payments/${id}`, { status: "Paid" })
+
+  async function downloadPDF(id) {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/user/export/pdf?paymentid=${id}`, {
+        responseType: 'blob',
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'Payment_Report.pdf');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error('PDF download failed:', error);
+    }
+  }
+  
+
+  const handleMarkPaid = async (id) => {
+    await axios.put(`http://localhost:3000/api/user/mark-as-paid?id=${id}`)
       .then(() => {
         const updatedPayments = payments.map(payment =>
-          payment.id === id ? { ...payment, status: "Paid" } : payment
+          payment.paymentid === id ? { ...payment, status: 1 } : payment
         );
         setPayments(updatedPayments);
         filterPayments(searchTerm, statusFilter);
@@ -135,13 +155,11 @@ const ManagePayments = () => {
         <thead>
           <tr>
             <th>Teacher</th>
-            <th>Sup Hours (Course)</th>
-            <th>Sup Hours (Tutorial)</th>
-
-            <th>Sup Hours (Lab woek)</th>
+            <th>Sup Hours</th>
             <th>Total Payment (DA)</th>
             <th>Status</th>
             <th>Action</th>
+            <th>Export</th>
           </tr>
         </thead>
         <tbody>
@@ -149,19 +167,23 @@ const ManagePayments = () => {
             filteredPayments.map((payment, index) => (
               <tr key={index}>
                 <td>{payment.teacher}</td>
-                <td>{payment.supHourCourse}</td>
-                <td>{payment.supHourTut}</td>
-                <td>{payment.suphourlab}</td>
+                <td>{payment.suphour}</td>
                 <td>{payment.totalPayment}</td>
                 <td className={payment.status === 1?styles.paid : styles.unpaid}>
                   {payment.status===1? "Paid":"Unpaid"}
                 </td>
                 <td>
                   {payment.status === 0 && (
-                    <button className={styles.actionButton} onClick={() => handleMarkPaid(payment.id)}>
+                      <button className={styles.actionButton} onClick={() => {
+                        console.log("payment id, ", payment.paymentid)
+                        handleMarkPaid(payment.paymentid)}}>
                       Mark as paid
                     </button>
                   )}
+                </td>
+                <td>
+                <button className={styles.export} onClick={() => downloadPDF(payment.paymentid)}>Export to PDF</button>
+
                 </td>
               </tr>
             ))
