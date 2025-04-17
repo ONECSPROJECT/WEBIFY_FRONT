@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Calendar from "react-calendar";
-import axios, { all } from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "react-calendar/dist/Calendar.css";
 import styles from "../CSS/ManageAbsences.module.css";
@@ -17,7 +17,7 @@ function ManageAbsences() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(Date.now()+7 *24*60 *60*1000));//one week later by default
   const [search,setSearch]=useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date('4-18-2025'));
   const [teachersList, setTeachersList] = useState([]);
   const [selectedOption, setSelectedOption] = useState("singleDay");
   const [selectedTeacher, setSelectedTeacher] = useState(null); 
@@ -112,15 +112,27 @@ function ManageAbsences() {
         const day=dateToDay(date)
         const res =await axios.get(`http://localhost:3000/api/user/get-weekend?day=${day}`)
         console.log("response is,,,,,", res.data)
-        if(res.data==="Weekend"){
-          if (res.data === "Weekend") {
+        if(res.data==="Friday"){
             const teachers=await fetchAllTeachersTWO()
             console.log("to send for adding sup hurs",teachers)
-            
-            await axios.put(`http://localhost:3000/api/user/add-suphoursBySession?teachers=${teachers}&date=${date.toISOString().split("T")[0]}`);
-            await axios.put(`http://localhost:3000/api/user/reset-presence?date=${date.toISOString().split("T")[0]}`);
+            if(teachers.length===0){
+              console.log("teachers are null")
+              return;
+            }
+            else{
+              console.log("teachers are not  null")
+
+              const day=date.getDate()
+              const month =date.getMonth()+1;
+              await axios.post(`http://localhost:3000/api/user/add-record?day=${day}&month=${month}`);
+              await axios.put(`http://localhost:3000/api/user/add-suphoursBySession`,{
+                teachers,
+                date: date.toISOString().split("T")[0]
+              })
+                            await axios.put(`http://localhost:3000/api/user/reset-presence?date=${date.toISOString().split("T")[0]}`);
+            }
           }}
-      } catch (err) {
+       catch (err) {
         console.log(err)
       }
     }
@@ -146,6 +158,7 @@ function ManageAbsences() {
     setTeachersList([])
     try {
       const response =await axios.get("http://localhost:3000/api/user/fetch-teachers")
+      console.log("teacher list inTWO,",response.data)
       return response.data
     } catch (error) {
       console.error("Error fetching teachers",error);
@@ -182,9 +195,11 @@ function ManageAbsences() {
         console.log("day:", dateToDay(date))
        const formattedDate = date.toISOString().split("T")[0]; //Format date
          const response = await axios.get(`http://localhost:3000/api/user/get-selective-teachers?date=${formattedDate}&day=${dateToDay(date)}`) //Start with the formatted date to exclude holidays and sick leaves, and then filter the teachers by the day
-       if ( response.data==="Today is a weekend"){
-        setComponent(<h2>Today is a weekend.</h2>);       
+       console.log("response data of component set",response.data)
+         if (response.data==="Friday"){
+        setComponent(<h2>Friday, calculating extra hours...</h2>);  
         setTeachersList([])
+
        }
        else if(response.data==="No teacher has extra sessions today"){
         setComponent(<h2>No teacher has extra sessions today.</h2>);       
