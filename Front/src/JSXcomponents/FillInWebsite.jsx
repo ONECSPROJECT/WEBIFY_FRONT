@@ -48,8 +48,8 @@ const [date,setDate]=useState(new Date().toISOString().split("T")[0])
     async function searchPeriod(){
       try {
         const response = await axios.get(`http://localhost:3000/api/user/get-period?date=${date}`)
-        console.log("period is", response.data.periodid)
-        setCounter(response.data.periodid)
+        console.log("period is", response.data)
+        setCounter(response.data)
       } catch (err) {
         console.log(err)
       }
