@@ -167,7 +167,7 @@ const ManagePayments = () => {
             filteredPayments.map((payment, index) => (
               <tr key={index}>
                 <td>{payment.teacher}</td>
-                <td>{payment.suphour}</td>
+                <td>{payment.suphour/60}</td>
                 <td>{payment.totalPayment}</td>
                 <td className={payment.status === 1?styles.paid : styles.unpaid}>
                   {payment.status===1? "Paid":"Unpaid"}
