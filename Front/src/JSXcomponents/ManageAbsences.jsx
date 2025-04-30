@@ -17,7 +17,7 @@ function ManageAbsences() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(Date.now()+7 *24*60 *60*1000));//one week later by default
   const [search,setSearch]=useState('');
-  const [date, setDate] = useState(new Date('05-02-2025'));
+  const [date, setDate] = useState(new Date());
   const [teachersList, setTeachersList] = useState([]);
   const [selectedOption, setSelectedOption] = useState("singleDay");
   const [selectedTeacher, setSelectedTeacher] = useState(null); 

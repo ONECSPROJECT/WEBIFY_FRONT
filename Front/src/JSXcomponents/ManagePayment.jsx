@@ -122,7 +122,27 @@ const ManagePayments = () => {
     }
     setFilteredPayments(filtered);
   };
-
+  async function downloadexcel() {
+    try {
+      const response = await axios.get(`http://localhost:3000/api/user/export/excel`, {
+        responseType: 'blob',
+      });
+  
+      const url = window.URL.createObjectURL(new Blob([response.data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+      }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'All_Teachers_Payment_Report.xlsx');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error('Excel download failed:', error);
+    }
+  }
+  
+  
   return (
     <div className={styles.containerpay}>
       <h2 className={styles.payh2}>Manage Payments</h2>
@@ -152,7 +172,10 @@ const ManagePayments = () => {
         </select>
         </div>
       </div>
+      <button className={styles.exportexcel} onClick={() =>downloadexcel()}>Export to EXCEL</button>
+
       <div className={styles.tpay}>
+
       <table className={styles.table}>
         <thead>
           <tr>
@@ -170,7 +193,7 @@ const ManagePayments = () => {
               <tr key={index}>
                 <td>{payment.teacher}</td>
                 <td>{payment.suphour/60}</td>
-                <td>{payment.totalPayment/60}</td>
+                <td>{payment.totalPayment}</td>
                 <td className={payment.status === 1?styles.paid : styles.unpaid}>
                   {payment.status===1? "Paid":"Unpaid"}
                 </td>

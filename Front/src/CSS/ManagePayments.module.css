@@ -94,6 +94,18 @@ margin-left: 25PX;
     border-radius: 5px;
     cursor: pointer;
   }
+
+  .exportexcel{
+    background-color: rgb(43, 209, 43) ;
+    padding: 15px 20px;
+    color:white;
+    font-size: 18px;
+    font-weight: 700;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+    margin-left: 5%;
+  }
   
   
   .tpay{
