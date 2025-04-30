@@ -13,22 +13,22 @@ const ManagePayments = () => {
   const [date,setDate]=useState(new Date().toISOString().split("T")[0])
   const [teacherList,setTeacherList]=useState([])
   //  new kherti 
-
+  async function getTeachers() {
+    try{
+    await axios.get(`http://localhost:3000/api/user/get-teachers?date=${date}`).then(res=>{setTeacherList(res.data.teachers)
+      setAcademicPeriod(res.data.period)
+      console.log(teacherList)
+    })
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
   useEffect(()=>{
     console.log(academicPeriod)
   },[academicPeriod])
   useEffect(() => {
-    async function getTeachers() {
-      try{
-      await axios.get(`http://localhost:3000/api/user/get-teachers?date=${date}`).then(res=>{setTeacherList(res.data.teachers)
-        setAcademicPeriod(res.data.period)
-        console.log(teacherList)
-      })
-      }
-      catch(err){
-        console.log(err)
-      }
-    }
+
     getTeachers()
     setPayments(teacherList.filter(payment => payment.academicPeriod === academicPeriod));
     setFilteredPayments(teacherList);
@@ -108,7 +108,9 @@ const ManagePayments = () => {
         setPayments(updatedPayments);
         filterPayments(searchTerm, statusFilter);
       })
+      
       .catch(error => console.error("Error updating payment status:", error));
+      getTeachers();
   };
 
   const filterPayments = (term, status) => {
@@ -168,7 +170,7 @@ const ManagePayments = () => {
               <tr key={index}>
                 <td>{payment.teacher}</td>
                 <td>{payment.suphour/60}</td>
-                <td>{payment.totalPayment}</td>
+                <td>{payment.totalPayment/60}</td>
                 <td className={payment.status === 1?styles.paid : styles.unpaid}>
                   {payment.status===1? "Paid":"Unpaid"}
                 </td>

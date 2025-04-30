@@ -141,7 +141,9 @@ function Tableteacher() {
           />
           <FaSearch className="icons" />
         </div>
-        <button className="add-teacher" onClick={() => setShowModal(true)}>
+        <button className="add-teacher" onClick={() => {
+        console.log("first grade is",grade)
+          setShowModal(true)}}>
           + Add Teacher
         </button>
       </div>
@@ -166,7 +168,9 @@ function Tableteacher() {
               <input type="text" value={payment_information} onChange={(e) => setccp(e.target.value)} />
               <label>Grade</label>
               <select value={grade} onChange={(e)=>setgrade(e.target.value)} name="" id="">
+                <option value="">Select</option>
                 {grades.map((grade)=>(
+
                   <option key={grade.rankid} value={grade.rankid}>{grade.name}</option>
                 ))}
               </select>

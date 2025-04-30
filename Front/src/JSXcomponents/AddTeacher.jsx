@@ -19,7 +19,6 @@ const handleSubmit = async (e) => {
    return(
 
 <form onSubmit={handleSubmit} >
-      
       <input name="fullname" placeholder="Full Name" value={fullname} onChange={(e) => setfullname(e.target.value)}/><br />
       <input name="state" placeholder="State" value={state} onChange={(e) => setstate(e.target.value)}/><br />
       <input name="grade" placeholder="Grade" value={grade} onChange={(e) => setgrade(e.target.value)}/><br />

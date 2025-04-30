@@ -88,7 +88,7 @@ function SupTimeTables() {
                         <td>{s.session_type}</td>
                         <td>{s.speciality || "null"}</td>
                         <td>{s.promotion || "Unknown"}</td>
-                        <td>{s.presence}</td>
+                        <td><strong>{s.presence==0? "absent":"present"}</strong></td>
                         <td>{period}</td>
                       </tr>
                     ))

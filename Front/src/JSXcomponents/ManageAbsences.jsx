@@ -17,7 +17,7 @@ function ManageAbsences() {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date(Date.now()+7 *24*60 *60*1000));//one week later by default
   const [search,setSearch]=useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(new Date('05-02-2025'));
   const [teachersList, setTeachersList] = useState([]);
   const [selectedOption, setSelectedOption] = useState("singleDay");
   const [selectedTeacher, setSelectedTeacher] = useState(null); 
@@ -113,8 +113,8 @@ function ManageAbsences() {
         const res =await axios.get(`http://localhost:3000/api/user/get-weekend?day=${day}`)
         console.log("response is,,,,,", res.data)
         if(res.data==="Friday"){
-            const teachers=await fetchAllTeachersTWO()
-            console.log("to send for adding sup hurs",teachers)
+          let teachers = (await fetchAllTeachersTWO()).filter(t =>t.user_id !== 1);
+          console.log("to send for adding sup hurs",teachers)
             if(teachers.length===0){
               console.log("teachers are null")
               return;
