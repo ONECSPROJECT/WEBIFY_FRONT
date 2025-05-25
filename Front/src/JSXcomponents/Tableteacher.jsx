@@ -183,6 +183,7 @@ function Tableteacher() {
                     }}>
                       <option value="Intérieur">Intérieur</option>
                       <option value="Exterieur">Exterieur</option>
+                      <option value="Vacataire">Vacataire</option>
                       </select>
 
               <div className="btnddiv">

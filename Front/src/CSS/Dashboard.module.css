@@ -19,19 +19,19 @@
     flex-direction: column;
     justify-content: center; /* Ensures everything is vertically centered */
     align-items: center;
-    width: 400px; /* Define a specific width */
+    width: 450px; /* Define a specific width */
+    height: fit-content;
 }
 
-.logo {
-    width: 75px;
-    height: 50px;
-    background: #D9D9D9;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
+.logo{
+    height: 180px;
+}
+
+.logo img{
+    transform: scale(0.35);
+    width: fit-content;
+    height: fit-content;
+
 }
 
 .getstarted {
@@ -46,7 +46,7 @@
 
 .wh2 {
     color: #091F44;
-    margin-top: 10px;
+    margin-top: 1px;
 }
 
 .paragr {

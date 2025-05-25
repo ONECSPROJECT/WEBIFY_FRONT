@@ -345,82 +345,114 @@ if (totalCourseHours>= 6) {
     <>
         <div className={styles.contentt}>
           <h1>Global Timetable</h1>
-          <div>
-            <label>Day:</label>
-            <select value={newSession.day_of_week} onChange={e => setNewSession({ ...newSession, day_of_week: e.target.value })}>
-              {Object.keys(schedule).map(day => <option key={day} value={day}>{day}</option>)}
-            </select>
-          </div>
+
+<div className={styles.formContainer}>
+  <div className={styles.formGroup}>
+    <label className={styles.label}>Day:</label>
+    <select
+      className={styles.input}
+      value={newSession.day_of_week}
+      onChange={e => setNewSession({ ...newSession, day_of_week: e.target.value })}
+    >
+      {Object.keys(schedule).map(day => (
+        <option key={day} value={day}>{day}</option>
+      ))}
+    </select>
+  </div>
+
+  <div className={styles.formGroup}>
+    <label className={styles.label}>Start Time:</label>
+    <input
+      type="time"
+      className={styles.input}
+      value={newSession.start_time}
+      onChange={e => setNewSession({ ...newSession, start_time: e.target.value })}
+    />
+  </div>
+
+  <div className={styles.formGroup}>
+    <label className={styles.label}>Duration (minutes):</label>
+    <input
+      type="text"
+      className={styles.input}
+      value={newSession.duration_minutes}
+      onChange={e => setNewSession({ ...newSession, duration_minutes: e.target.value })}
+    />
+  </div>
+
+  <div className={styles.formGroup}>
+    <label className={styles.label}>Type of session:</label>
+    <select
+      required
+      className={styles.input}
+      value={newSession.session_type}
+      onChange={e => setNewSession({ ...newSession, session_type: e.target.value })}
+    >
+      <option value="">Select</option>
+      {sessions.map(session => (
+        <option key={session.session_type_id} value={session.name}>
+          {session.name}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <div className={styles.formGroup}>
+    <label className={styles.label}>Promotion:</label>
+    <select
+      required
+      className={styles.input}
+      value={newSession.promotion}
+      onChange={e => {
+        handlePromotionChange(e);
+        setNewSession({ ...newSession, promotion: e.target.value });
+      }}
+    >
+      <option value="">Select</option>
+      {promotions.map(promotion => (
+        <option key={promotion.promoid} value={promotion.promoid}>
+          {promotion.name}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <div className={styles.formGroup}>
+    <label className={styles.label}>Speciality:</label>
+    <select
+      className={styles.input}
+      value={newSession.speciality}
+      onChange={handleSpecialityChange}
+    >
+      <option value="">Select</option>
+      {specialities.map(speciality => (
+        <option key={speciality.specialityid} value={speciality.specialityid}>
+          {speciality.name}
+        </option>
+      ))}
+    </select>
+  </div>
+
+  <div className={styles.formGroup}>
+    <label className={styles.label}>Teacher:</label>
+    <select
+      required
+      className={styles.input}
+      value={newSession.teacher}
+      onChange={e => setNewSession({ ...newSession, teacher: e.target.value })}
+    >
+      <option value="">Select</option>
+      {teachers.map(teacher => (
+        <option key={teacher.teacherID} value={teacher.teacherID}>
+          {teacher.last_name} {teacher.first_name}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
+
   
-          <div>
-            <label>Start Time:</label>
-            <input type="time" value={newSession.start_time} onChange={e => setNewSession({ ...newSession, start_time: e.target.value })} />
-          </div>
-  
-          <div>
-            <label>Duration (minutes):</label>
-            <input type="text" value={newSession.duration_minutes} onChange={e => setNewSession({ ...newSession, duration_minutes: e.target.value })} />
-          </div>
-  
-          {/*session type selection*/}
-          <div>
-            <label>Type of session:</label>
-            <select required value={newSession.session_type} onChange={e=> {
-      setNewSession({ ...newSession, session_type: e.target.value })}}>
-              <option value="">Select</option>
-              {sessions.map(session => (
-                <option key={session.session_type_id} value={session.name}>
-                 {session.name}
-                </option>))}
-            </select>
-          </div>
-  
-    
-  
-    {/*Promotion selection*/}
-    <div>
-    <label>Promotion</label>
-    <select required value={newSession.promotion} onChange={e => {handlePromotionChange(e)
-      setNewSession({ ...newSession, promotion: e.target.value })}}>
-              <option value="">Select</option>
-              {promotions.map(promotion => (
-                <option key={promotion.promoid} value={promotion.promoid}>
-                 {promotion.name}
-                </option>
-              ))}
-            </select>
-    </div>
-  
-      {/*Speciality selection*/}
-      <div>
-    <label>Speciality</label>
-    <select  value={newSession.speciality} onChange={handleSpecialityChange}>
-              <option value="">Select</option>
-              {specialities.map(speciality => (
-                <option key={speciality.specialityid} value={speciality.specialityid}>
-                 {speciality.name}
-                </option>
-              ))}
-            </select>
-    </div>
-  
-  
-  
-  
-          {/* Teacher Selection */}
-          <div>
-            <label>Teacher:</label>
-            <select required value={newSession.teacher} onChange={e => setNewSession({ ...newSession, teacher: e.target.value })}>
-              <option value="">Select</option>
-              {teachers.map(teacher => (
-                <option key={teacher.teacherID} value={teacher.teacherID}>
-                  {teacher.last_name} {teacher.first_name}
-                </option>
-              ))}
-            </select>
-          </div>
-  
-          <button onClick={handleAddSession}>Add Session</button>
+          <button className={styles.ADDSESSION} onClick={handleAddSession}>Add Session</button>
           <table border="1">
             <thead>
               <tr>
@@ -459,7 +491,7 @@ if (totalCourseHours>= 6) {
             </tbody>
           </table>
   
-          <button onClick={handleSaveSchedule}>Save Changes</button>
+          <button className={styles.SAVESESSION}onClick={handleSaveSchedule}>Save Changes</button>
         </div>
         
 
