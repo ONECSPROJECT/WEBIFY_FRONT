@@ -133,7 +133,7 @@ const [date,setDate]=useState(new Date().toISOString().split("T")[0])
     setNewSession(prev => ({ ...prev,speciality:selectedSpec}))
 if (selectedSpec){
   try{
-    const response= await axios.get(`http://localhost:3000/api/user/fetch-speciality-name?specialityid=${selectedSpec}`)
+    const response= await axios.get(`http://localhost:3000/api/user/fetch-speciality-name?speciality_id=${selectedSpec}`)
     setSpecName(response.data.name)
     console.log(specName)
   }

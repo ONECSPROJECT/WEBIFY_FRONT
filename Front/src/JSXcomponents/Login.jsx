@@ -17,7 +17,9 @@ try{
  const response= await axios.post("http://localhost:3000/api/user/login",{email,password}) //respond with a token and a role
  console.log("Login Response:", response.data.data.user.role);
  localStorage.setItem("authToken",response.data.token)
- if(response.data.data.user.role==="admin"){
+ console.log(String(response.data.data.user.role).toLowerCase())
+ if(String(response.data.data.user.role).toLowerCase()==="admin"){
+
   navigate('./AdminPage')
  }
  else{
